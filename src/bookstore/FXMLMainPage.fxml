@@ -22,16 +22,12 @@
       </Label>
       <Label layoutX="325.0" layoutY="124.0" text="a" />
       <Label layoutX="278.0" layoutY="167.0" text="friendly book store" textFill="#4cd63a" />
-      <Label layoutX="14.0" layoutY="239.0" text="Friend of books" />
-      <Label layoutX="513.0" layoutY="239.0" text="The wise man" />
       <Button fx:id="Button1" layoutX="97.0" layoutY="329.0" mnemonicParsing="false" onAction="#signIn" prefHeight="25.0" prefWidth="60.0" text="Sign in" />
       <Button fx:id="Button2" layoutX="97.0" layoutY="354.0" mnemonicParsing="false" onAction="#connect" text="Connect" textAlignment="CENTER" />
       <Button fx:id="Button3" layoutX="496.0" layoutY="342.0" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="52.0" text="Exit" />
-      <TextField fx:id="text1" layoutX="53.0" layoutY="256.0" promptText="ID" />
-      <TextField fx:id="text3" layoutX="426.0" layoutY="256.0" promptText="ID" />
+      <TextField fx:id="text1" layoutX="53.0" layoutY="256.0" onAction="#signIn" promptText="ID" />
       <Label fx:id="label" alignment="CENTER" layoutX="54.0" layoutY="192.0" prefHeight="17.0" prefWidth="519.0" />
       <ImageView fx:id="imageView" fitHeight="567.0" fitWidth="316.0" layoutX="157.0" opacity="0.22" pickOnBounds="true" preserveRatio="true" />
-      <PasswordField fx:id="pass1" layoutX="53.0" layoutY="281.0" promptText="Password" />
-      <PasswordField fx:id="pass2" layoutX="426.0" layoutY="281.0" promptText="Password" />
+      <PasswordField fx:id="pass1" layoutX="53.0" layoutY="281.0" onAction="#signIn" promptText="Password" />
    </children>
 </AnchorPane>

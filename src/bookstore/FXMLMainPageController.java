@@ -37,44 +37,45 @@ public class FXMLMainPageController implements Initializable {
     private Label label;
     @FXML
     private TextField text1;
-    @FXML
-    private TextField text2;
-    @FXML
-    private TextField text3;
-    @FXML
-    private TextField text4;
+
     @FXML
     private ImageView imageView;
     @FXML
     private PasswordField pass1;
-    @FXML
-    private PasswordField pass2;
 
     private String idUser = "user", passUser = "pass1", idManager = "manager", passManager = "pass2";
-    private boolean isConnected = false;
+    private boolean isConnectedUser = false;
+    private boolean isConnectedManager = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Image image = new Image(FXMLMainPageController.class.getResourceAsStream("Papirus.png"));
         imageView.setImage(image);
+        Button2.setVisible(false);
     }
 
     @FXML
     public void signIn(ActionEvent event) {
         label.setText("");
 
-        if (text1.getText().toString().equals(idUser) && pass1.getText().toString().equals(passUser) || text3.getText().toString().equals(idManager) && pass2.getText().toString().equals(passManager)) {
+        if (text1.getText().equals(idUser) && pass1.getText().equals(passUser)) {
             label.setTextFill(Color.GREEN);
             label.setText("Log in succeded.You can connect to database!");
-            isConnected=true;
+            isConnectedUser = true;
+            Button2.setVisible(true);
+        } else if (text1.getText().equals(idManager) && pass1.getText().equals(passManager)) {
+            label.setTextFill(Color.GREEN);
+            label.setText("Log in succeded.You can connect to database!");
+            isConnectedManager = true;
+            Button2.setVisible(true);
         } else {
             label.setTextFill(Color.RED);
             label.setText("Log in failed!");
+            Button2.setVisible(false);
         }
         text1.setText("");
         pass1.setText("");
-        text3.setText("");
-        pass2.setText("");
+
     }
 
     @FXML
@@ -82,24 +83,26 @@ public class FXMLMainPageController implements Initializable {
         Stage stage = (Stage) Button3.getScene().getWindow();
         stage.close();
     }
+
     @FXML
-    public void connect(ActionEvent event){
-    if (isConnected==true){
-        try {
-            Node node = (Node) event.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSelection.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            
-        } catch (Exception ex) {
-            Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+    public void connect(ActionEvent event) {
+        if (isConnectedUser == true || isConnectedManager == true) {
+            try {
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSelection.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+               
+
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            label.setText("You have to sign in first!");
         }
-    }else{
-        label.setText("You have to sign in first!");
     }
-        }
 
 }
