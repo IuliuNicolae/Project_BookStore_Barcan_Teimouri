@@ -17,7 +17,7 @@ public class Client extends Persson{
 
     public Client(SimpleStringProperty lastName, SimpleStringProperty firstName, SimpleStringProperty adress, 
             SimpleStringProperty email, SimpleStringProperty phone,SimpleIntegerProperty total) {
-        super(lastName, firstName, adress, email, phone);
+      //  super(lastName, firstName, adress, email, phone);
         this.total=total;
     }
     public SimpleIntegerProperty getTotal() {

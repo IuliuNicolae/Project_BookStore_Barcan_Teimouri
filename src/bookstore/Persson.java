@@ -6,39 +6,91 @@
 package bookstore;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  *
  * @author Iuliu
  */
 public class Persson {
-    private SimpleStringProperty lastName;
-    private SimpleStringProperty firstName;
-    private SimpleStringProperty adress;
-    private SimpleStringProperty email;
-    private SimpleStringProperty phone;
-    public Persson(SimpleStringProperty lastName,SimpleStringProperty firstName,SimpleStringProperty adress,
-    SimpleStringProperty email,SimpleStringProperty phone){
-        this.lastName=lastName;
-        this.firstName=firstName;
-        this.adress=adress;
-        this.email=email;
-        this.phone=phone;
-    }
-    public SimpleStringProperty getLastName() {
-        return lastName;
-    }
-    public SimpleStringProperty getFirstName() {
+    
+    
+    private final StringProperty lastName = new SimpleStringProperty(this, "lastName");
+    private final StringProperty firstName = new SimpleStringProperty(this, "firstName");
+    private final StringProperty email = new SimpleStringProperty(this, "email");
+    private final StringProperty adress = new SimpleStringProperty(this, "adress");
+    private final StringProperty phone = new SimpleStringProperty(this, "phone");
+
+    public StringProperty firstProperty() {
         return firstName;
     }
-    public SimpleStringProperty getAdress() {
-        return adress;
+
+    public final String getFirstName() {
+        return firstProperty().get();
     }
-    public SimpleStringProperty getEmail() {
+
+    public final void setFirstName(String firstName) {
+        firstProperty().set(firstName);
+    }
+
+    public StringProperty lastnProperty() {
+        return lastName;
+    }
+
+    public final String getName() {
+        return lastnProperty().get();
+    }
+
+    public final void setLastName(String lastName) {
+        lastnProperty().set(lastName);
+    }
+
+    public StringProperty emailProperty() {
         return email;
     }
-    public SimpleStringProperty getPhone() {
+
+    public final String getEmail() {
+        return emailProperty().get();
+    }
+
+    public final void setEmail(String email) {
+        emailProperty().set(email);
+    }
+
+    public StringProperty adressProperty() {
+        return adress;
+    }
+
+    public final String getAdress() {
+        return adressProperty().get();
+    }
+
+    public final void setAdress(String adress) {
+        adressProperty().set(adress);
+    }
+
+    public StringProperty phoneProperty() {
         return phone;
     }
-    
+
+    public final String getPhone() {
+        return phoneProperty().get();
+    }
+
+    public final void setPhone(String phone) {
+        phoneProperty().set(phone);
+    }
+
+    public Persson() {
+    }
+
+    public Persson(String lastname, String firstname, String adress, String email, String phone) {
+        
+        setLastName(lastname);
+        setFirstName(firstname);
+        setAdress(adress);
+        setEmail(email);
+        setPhone(phone);
+    }
+
 }

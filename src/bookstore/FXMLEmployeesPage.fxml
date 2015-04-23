@@ -8,34 +8,32 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLEmployeesPageController">
-   <children>
-      <VBox layoutX="22.0" layoutY="21.0" prefHeight="177.0" prefWidth="101.0">
-         <children>
-            <Button fx:id="button3" mnemonicParsing="false" onAction="#handleViewButton" prefHeight="25.0" prefWidth="100.0" text="View" />
-            <Button fx:id="button4" mnemonicParsing="false" onAction="#handleNewButton" prefHeight="25.0" prefWidth="102.0" text="New" />
-            <Button fx:id="button5" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="25.0" prefWidth="101.0" text="Delete" />
-            <Button fx:id="button1" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="25.0" prefWidth="101.0" text="Go back" />
-            <Button fx:id="button2" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="25.0" prefWidth="100.0" text="Quit" />
-         </children>
-      </VBox>
-      <TextArea fx:id="textArea" layoutX="386.0" layoutY="21.0" onDragDetected="#handleViewButton" prefHeight="200.0" prefWidth="200.0" />
-      <VBox layoutX="137.0" layoutY="21.0" prefHeight="266.0" prefWidth="200.0">
-         <children>
-            <TextField fx:id="textField2" promptText="Last Name" />
-            <TextField fx:id="textField3" promptText="First Name" />
-            <TextField fx:id="textField4" promptText="Adress" />
-            <TextField fx:id="textField6" promptText="Phone" />
-            <TextField fx:id="textField5" promptText="Email" />
-            <TextField fx:id="textField7" promptText="Job Title" />
-            <TextField fx:id="textField8" promptText="Salary" />
-            <Button fx:id="button6" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="200.0" text="Registrer" />
-         </children>
-      </VBox>
-      <TableView layoutX="386.0" layoutY="187.0" prefHeight="200.0" prefWidth="200.0">
+    <children>
+        <VBox layoutX="22.0" layoutY="21.0" prefHeight="177.0" prefWidth="101.0">
+            <children>
+                <Button fx:id="button3" mnemonicParsing="false" onAction="#handleViewButton" prefHeight="25.0" prefWidth="100.0" text="View" />
+                <Button fx:id="button4" mnemonicParsing="false" onAction="#handleNewButton" prefHeight="25.0" prefWidth="102.0" text="New" />
+                <Button fx:id="button5" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="25.0" prefWidth="101.0" text="Delete" />
+                <Button fx:id="button1" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="25.0" prefWidth="101.0" text="Go back" />
+                <Button fx:id="button2" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="25.0" prefWidth="100.0" text="Quit" />
+            </children>
+        </VBox>
+        <VBox layoutX="137.0" layoutY="21.0" prefHeight="266.0" prefWidth="76.0">
+            <children>
+                <TextField fx:id="textField2" onAction="#handleRegisterButton" promptText="Last Name" />
+                <TextField fx:id="textField3" onAction="#handleRegisterButton" promptText="First Name" />
+                <TextField fx:id="textField4" onAction="#handleRegisterButton" promptText="Adress" />
+                <TextField fx:id="textField6" onAction="#handleRegisterButton" promptText="Phone" />
+                <TextField fx:id="textField5" onAction="#handleRegisterButton" promptText="Email" />
+                <TextField fx:id="textField7" onAction="#handleRegisterButton" promptText="Initialer" />
+                <TextField fx:id="textField8" onAction="#handleRegisterButton" promptText="Salary" />
+                <Button fx:id="button6" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="200.0" text="Registrer" />
+            </children>
+        </VBox>
+      <TableView fx:id="table" layoutX="1.0" layoutY="223.0" onSort="#handleViewButton" prefHeight="177.0" prefWidth="600.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn prefWidth="28.0" text="C1" />
         </columns>
       </TableView>
-   </children>
+    </children>
 </AnchorPane>
