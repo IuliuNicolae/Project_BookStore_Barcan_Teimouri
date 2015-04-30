@@ -11,7 +11,6 @@
     <children>
         <VBox layoutX="22.0" layoutY="21.0" prefHeight="177.0" prefWidth="101.0">
             <children>
-                <Button fx:id="button3" mnemonicParsing="false" onAction="#handleViewButton" prefHeight="25.0" prefWidth="100.0" text="View" />
                 <Button fx:id="button4" mnemonicParsing="false" onAction="#handleNewButton" prefHeight="25.0" prefWidth="102.0" text="New" />
                 <Button fx:id="button5" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="25.0" prefWidth="101.0" text="Delete" />
                 <Button fx:id="button1" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="25.0" prefWidth="101.0" text="Go back" />
@@ -30,9 +29,9 @@
                 <Button fx:id="button6" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="200.0" text="Registrer" />
             </children>
         </VBox>
-      <TableView fx:id="table" layoutX="1.0" layoutY="223.0" onSort="#handleViewButton" prefHeight="177.0" prefWidth="600.0">
+      <TableView fx:id="table" layoutX="1.0" layoutY="223.0" prefHeight="177.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="223.0">
         <columns>
-          <TableColumn prefWidth="28.0" text="C1" />
+          <TableColumn prefWidth="28.0" text="C1" visible="false" />
         </columns>
       </TableView>
     </children>

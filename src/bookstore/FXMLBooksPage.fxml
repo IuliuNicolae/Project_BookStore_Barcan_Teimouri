@@ -6,6 +6,35 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLBooksPageController">
-    
+<AnchorPane id="AnchorPane" prefHeight="370.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLBooksPageController">
+   <children>
+      <TableView fx:id="table1" layoutY="179.0" prefHeight="155.0" prefWidth="575.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" visible="false" />
+        </columns>
+      </TableView>
+      <TextField fx:id="textField1" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="Title" />
+      <TextField fx:id="textField2" layoutX="80.0" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="Author" />
+      <TextField fx:id="textField3" layoutX="160.0" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="ISBN" />
+      <TextField fx:id="textField4" layoutX="240.0" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="Genre" />
+      <TextField fx:id="textField5" layoutX="320.0" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="Quantity" />
+      <TextField fx:id="textField6" layoutX="400.0" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="Price" />
+      <TextField fx:id="textField7" layoutX="480.0" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="Client's initialer" />
+      <Button fx:id="sellBookButton" layoutX="463.0" layoutY="122.0" mnemonicParsing="false" onAction="#sellBookHandle" text="Sell" />
+      <Button fx:id="addBookButton" layoutX="54.0" layoutY="122.0" mnemonicParsing="false" onAction="#addBookHandle" text="Add a new book" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
+      <Button fx:id="exitButton" layoutX="494.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleExitButton" text="Exit" />
+      <TextField fx:id="searchText" layoutX="305.0" layoutY="47.0" promptText="Title,author..." />
+      <Label layoutX="299.0" layoutY="126.0" prefHeight="17.0" prefWidth="95.0" text="Amount" />
+      <MenuButton layoutX="454.0" layoutY="47.0" mnemonicParsing="false" text="Search">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Title" />
+          <MenuItem mnemonicParsing="false" text="Author" />
+            <MenuItem mnemonicParsing="false" text="ISBN" />
+        </items>
+      </MenuButton>
+      <TextField fx:id="textFieldClientId" layoutX="98.0" layoutY="334.0" promptText="Client's ID" />
+      <TextField fx:id="textFieldEmployeeInitialer" layoutX="246.0" layoutY="334.0" promptText="Emplyee's initialer" />
+      <Button layoutX="395.0" layoutY="334.0" mnemonicParsing="false" text="Done" />
+   </children>
 </AnchorPane>

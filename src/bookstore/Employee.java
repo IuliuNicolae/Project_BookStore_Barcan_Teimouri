@@ -60,7 +60,7 @@ public class Employee extends Persson {
         ArrayList<TableColumn<Employee, ?>> columns = new ArrayList<TableColumn<Employee, ?>>();
         String[] columnNames = {"First Name", "Last Name", "Adress", "Email", "Phone", "Initialer", "Salary"};
         String[] variableNames = {"lastn", "first", "adress", "email", "phone", "initialer", "salary"};
-        Integer[] column_width = {33, 33, 33, 33, 33, 33, 33};
+        Integer[] column_width = {57, 53, 53, 53, 53, 53, 63};
 
         i = 0;
         TableColumn<Employee, String> lastnCol = new TableColumn<>(columnNames[i++]);
@@ -73,7 +73,7 @@ public class Employee extends Persson {
 
         i = 0;
         lastnCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
-        firstCol.setCellValueFactory(new PropertyValueFactory<Employee, String>(variableNames[i++]));
+        firstCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
         adressCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
         emailCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
@@ -81,12 +81,13 @@ public class Employee extends Persson {
         salaryCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
 
        i = 0;
-        lastnCol.prefWidthProperty().bind(table.prefWidthProperty().divide(100 / column_width[i++]));
-        firstCol.prefWidthProperty().bind(table.prefWidthProperty().divide(100 / column_width[i++]));
-        emailCol.prefWidthProperty().bind(table.prefWidthProperty().divide(100 / column_width[i++]));
-        phoneCol.prefWidthProperty().bind(table.prefWidthProperty().divide(100 / column_width[i++]));
-        initialerCol.prefWidthProperty().bind(table.prefWidthProperty().divide(100 / column_width[i++]));
-        salaryCol.prefWidthProperty().bind(table.prefWidthProperty().divide(100 / column_width[i++]));
+        lastnCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
+        firstCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
+        adressCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
+        emailCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
+        phoneCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
+        initialerCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
+        salaryCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
         
         columns.add(lastnCol);
         columns.add(firstCol);

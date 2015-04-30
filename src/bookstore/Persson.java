@@ -12,7 +12,7 @@ import javafx.beans.property.StringProperty;
  *
  * @author Iuliu
  */
-public class Persson {
+public abstract class Persson {
     
     
     private final StringProperty lastName = new SimpleStringProperty(this, "lastName");

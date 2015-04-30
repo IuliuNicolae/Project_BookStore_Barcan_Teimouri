@@ -42,16 +42,20 @@ public class FXMLMainPageController implements Initializable {
     private ImageView imageView;
     @FXML
     private PasswordField pass1;
-
-    private String idUser = "user", passUser = "pass1", idManager = "manager", passManager = "pass2";
+    @FXML
+    Parent root;
+    private String idUser = "user", passUser = "1", idManager = "manager", passManager = "pass2";
     private boolean isConnectedUser = false;
     private boolean isConnectedManager = false;
+  
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Image image = new Image(FXMLMainPageController.class.getResourceAsStream("Papirus.png"));
         imageView.setImage(image);
         Button2.setVisible(false);
+
+         //imageView.fitWidthProperty().bind(imageView.getScene().getWindow().widthProperty());
     }
 
     @FXML
@@ -94,8 +98,8 @@ public class FXMLMainPageController implements Initializable {
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
+               // imageView.
                 stage.show();
-               
 
             } catch (Exception ex) {
                 Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);

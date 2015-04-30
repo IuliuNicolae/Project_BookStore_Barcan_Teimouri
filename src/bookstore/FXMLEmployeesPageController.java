@@ -9,12 +9,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,11 +19,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -40,8 +34,6 @@ public class FXMLEmployeesPageController implements Initializable {
     private Button button1;
     @FXML
     private Button button2;
-    @FXML
-    private Button button3;
     @FXML
     private Button button4;
     @FXML
@@ -71,6 +63,10 @@ public class FXMLEmployeesPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        DBConnect con = new DBConnect();
+        table.getColumns().addAll(Employee.getColumn(table));
+        table.setItems(con.getDataEmployees());
+        
         button6.setVisible(false);
         textField2.setVisible(false);
         textField3.setVisible(false);
@@ -104,21 +100,7 @@ public class FXMLEmployeesPageController implements Initializable {
         stage.close();
     }
 
-    @FXML
-    private void handleViewButton(ActionEvent event) {
-        DBConnect con = new DBConnect();
-        table.getColumns().addAll(Employee.getColumn(table));
-        table.setItems(con.getData());
-        button6.setVisible(false);
-        textField2.setVisible(false);
-        textField3.setVisible(false);
-        textField4.setVisible(false);
-        textField5.setVisible(false);
-        textField6.setVisible(false);
-        textField7.setVisible(false);
-        textField8.setVisible(false);
-
-    }
+   
 
     @FXML
     private void handleNewButton(ActionEvent event) {
@@ -148,7 +130,7 @@ public class FXMLEmployeesPageController implements Initializable {
         DBConnect con = new DBConnect();
         con.deleteData(initialer);
         table.getColumns().addAll(Employee.getColumn(table));
-        table.setItems(con.getData());
+        table.setItems(con.getDataEmployees());
     }
 
     @FXML
@@ -169,16 +151,12 @@ public class FXMLEmployeesPageController implements Initializable {
         String q8 = textField8.getText();
         textField8.clear();
         DBConnect connect = new DBConnect();
-        connect.setData( q2, q3, q4, q5, q6, q7, q8);
+        connect.setData(q2, q3, q4, q5, q6, q7, q8);
         table.getColumns().addAll(Employee.getColumn(table));
-        table.setItems(connect.getData());
-        
-    }
 
-    public static ObservableList<Employee> getExemple() {
-        ObservableList<Employee> data = FXCollections.observableArrayList();
-        data.addAll(new Employee("1", "2", "3", "4", "5", "6", "7"));
-        return data;
     }
+    
+
+    
 
 }
