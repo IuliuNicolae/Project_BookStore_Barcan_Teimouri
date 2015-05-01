@@ -67,15 +67,18 @@ public class FXMLMainPageController implements Initializable {
             label.setText("Log in succeded.You can connect to database!");
             isConnectedUser = true;
             Button2.setVisible(true);
+            DataStorage.getDataStorage().setLogAsManager(false);
         } else if (text1.getText().equals(idManager) && pass1.getText().equals(passManager)) {
             label.setTextFill(Color.GREEN);
             label.setText("Log in succeded.You can connect to database!");
             isConnectedManager = true;
             Button2.setVisible(true);
+            DataStorage.getDataStorage().setLogAsManager(true);
         } else {
             label.setTextFill(Color.RED);
             label.setText("Log in failed!");
             Button2.setVisible(false);
+            DataStorage.getDataStorage().setLogAsManager(false);
         }
         text1.setText("");
         pass1.setText("");

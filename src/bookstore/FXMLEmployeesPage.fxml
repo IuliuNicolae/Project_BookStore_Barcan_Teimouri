@@ -34,5 +34,6 @@
           <TableColumn prefWidth="28.0" text="C1" visible="false" />
         </columns>
       </TableView>
+      <Label fx:id="labelError" layoutX="223.0" layoutY="146.0" prefHeight="17.0" prefWidth="286.0" text="Label" />
     </children>
 </AnchorPane>

@@ -48,24 +48,43 @@ public class DBConnect {
     public ObservableList<Employee> getDataEmployees() {
         ObservableList<Employee> data = FXCollections.observableArrayList();
         try {
-            String query1 = "select lastn, first,adress,email,phone,initialer,salary from employees";
-            rs = st.executeQuery(query1);
-            while (rs.next()) {
-                String lastname = rs.getString("lastn");
-                String first = rs.getString("first");
-                String adress = rs.getString("adress");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-                String initialer = rs.getString("initialer");
-                String salary = rs.getString("salary");
+            String query = "select lastn, first,adress,email,phone,initialer,salary from employees";
+            String query1 = "select lastn, first,adress,email,phone,initialer from employees";
+            if (DataStorage.getDataStorage().getLogAsManager() == true) {
+                rs = st.executeQuery(query);
+                while (rs.next()) {
+                    String lastname = rs.getString("lastn");
+                    String first = rs.getString("first");
+                    String adress = rs.getString("adress");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("phone");
+                    String initialer = rs.getString("initialer");
+                    String salary = rs.getString("salary");
 
-                data.addAll(new Employee(first, lastname, adress, email, phone, initialer, salary));
+                    data.addAll(new Employee(first, lastname, adress, email, phone, initialer, salary));
+
+                }
+
+            } else {
+                rs = st.executeQuery(query1);
+                while (rs.next()) {
+                    String lastname = rs.getString("lastn");
+                    String first = rs.getString("first");
+                    String adress = rs.getString("adress");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("phone");
+                    String initialer = rs.getString("initialer");
+                    String salary ="$$$";
+                    data.addAll(new Employee(first, lastname, adress, email, phone, initialer, salary));
+                }
             }
-        } catch (Exception ex) {
+            }catch (Exception ex) {
             System.out.println(ex);
         }
-        return data;
-    }
+            return data;
+        }
+
+    
 
     public void setData(String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
         try {
@@ -208,23 +227,24 @@ public class DBConnect {
     }
 
     public int getPriceSellOperation(String isbn) {
-        int price = 0;   
+        int price = 0;
         try {
             rs = st.executeQuery("select price from books where ISBN like " + "'" + isbn + "'");
             while (rs.next()) {
-                 price = rs.getInt("price");
+                price = rs.getInt("price");
             }
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return price;
     }
-     public String getTitleSellOperation(String isbn) {
-        String title= null;   
+
+    public String getTitleSellOperation(String isbn) {
+        String title = null;
         try {
             rs = st.executeQuery("select title from books where ISBN like " + "'" + isbn + "'");
             while (rs.next()) {
-                 title = rs.getString("title");
+                title = rs.getString("title");
             }
         } catch (Exception ex) {
             System.out.println(ex);

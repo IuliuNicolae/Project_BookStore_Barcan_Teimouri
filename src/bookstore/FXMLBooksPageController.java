@@ -22,7 +22,9 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -59,12 +61,12 @@ public class FXMLBooksPageController implements Initializable {
     private TextField searchText;
     @FXML
     private TextArea textAreaOperations;
-    @FXML 
+    @FXML
     private Label labelCurrentAmount;
     @FXML
     private Label labelDailyAmount;
-    private int currentAmount=0;
-    private int dailyAmount=0;
+    private int currentAmount = 0;
+    private int dailyAmount = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -134,14 +136,14 @@ public class FXMLBooksPageController implements Initializable {
 
         table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.getDataBooks());
-        System.out.println(con.getTitleSellOperation(isbn)+""+con.getPriceSellOperation(isbn));
-        String item=con.getTitleSellOperation(isbn)+""+con.getPriceSellOperation(isbn);
-        textAreaOperations.appendText(item+"\n");
-       int currentPrice=calcPriceWithDiscount(con.getPriceSellOperation(isbn),0);
-       currentAmount=currentAmount+currentPrice;
-        dailyAmount=dailyAmount+currentPrice;
-        labelCurrentAmount.setText("Current amount is"+currentAmount);
-        labelDailyAmount.setText("Daily amount is"+dailyAmount);
+        System.out.println(con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn));
+        String item = con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn);
+        textAreaOperations.appendText(item + "\n");
+        int currentPrice = calcPriceWithDiscount(con.getPriceSellOperation(isbn), 0);
+        currentAmount = currentAmount + currentPrice;
+        dailyAmount = dailyAmount + currentPrice;
+        labelCurrentAmount.setText("Current amount is " +" "+ currentAmount);
+        labelDailyAmount.setText("Daily amount is " +" "+ dailyAmount);
     }
 
     @FXML
@@ -180,14 +182,28 @@ public class FXMLBooksPageController implements Initializable {
         table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.searchAuthor(author1));
     }
+
     @FXML
-    public void printButtonHandle(){
-    currentAmount=0;
-    labelCurrentAmount.setText("Current amount is "+currentAmount);
-    
+    public void printButtonHandle(ActionEvent event) {
+        if (currentAmount != 0) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLNote.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Kvito");
+                stage.setScene(new Scene(root1));
+                stage.show();
+                currentAmount = 0;
+                labelCurrentAmount.setText("Current amount is " + currentAmount);
+                textAreaOperations.clear();
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLBooksPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }labelCurrentAmount.setText(" Current amount");
     }
-    public static int calcPriceWithDiscount(int price,int discount){
-    int finalPrice=price-(price*discount);
-    return finalPrice;
+
+    public static int calcPriceWithDiscount(int price, int discount) {
+        int finalPrice = price - (price * discount);
+        return finalPrice;
     }
 }
