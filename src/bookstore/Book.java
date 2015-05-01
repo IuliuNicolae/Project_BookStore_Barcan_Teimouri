@@ -125,12 +125,13 @@ public class Book {
         setInitialer(initialer);
     }
 
+
     public static ArrayList<TableColumn<Book, ?>> getColumn(TableView table) {
         int i;
         ArrayList<TableColumn<Book, ?>> columns = new ArrayList<TableColumn<Book, ?>>();
              String[] columnNames = {"Title of Book", "Author of Book", "ISBN", "Genre", "Quantity", "Price", "Initialer of Client"};
         String[] variableNames = {"title", "author", "isbn", "genre", "quantity", "price", "initialer"};
-        Integer[] column_width = {33, 33, 33, 33, 33, 33, 33};
+        Integer[] column_width = {100, 100, 80, 80, 40, 40, 80};
 
         i = 0;
         TableColumn<Book, String> titleCol = new TableColumn<>(columnNames[i++]);
@@ -148,16 +149,16 @@ public class Book {
         genreCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
         quantityCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
         priceCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
-        initialerCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
+        //initialerCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
 
        i = 0;
-        titleCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
-        authorCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
-        isbnCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
-        genreCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
-        quantityCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
-        priceCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
-        initialerCol.prefWidthProperty().bind(table.prefWidthProperty().divide(400 / column_width[i++]));
+        titleCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
+        authorCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
+        isbnCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
+        genreCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
+        quantityCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
+        priceCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
+        initialerCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
         
         columns.add(titleCol);
         columns.add(authorCol);
@@ -168,5 +169,6 @@ public class Book {
         columns.add(initialerCol);
         return columns;
     }
+    
 
 }

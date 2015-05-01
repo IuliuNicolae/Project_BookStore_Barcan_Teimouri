@@ -9,8 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,11 +17,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -33,8 +31,8 @@ import javafx.stage.Stage;
  */
 public class FXMLBooksPageController implements Initializable {
 
-   @FXML
-    private  TableView<Book> table1 = new TableView<Book>();
+    @FXML
+    private TableView<Book> table1 = new TableView<Book>();
     @FXML
     private TextField textField1;
     @FXML
@@ -59,10 +57,18 @@ public class FXMLBooksPageController implements Initializable {
     private Button exitButton;
     @FXML
     private TextField searchText;
-   
+    @FXML
+    private TextArea textAreaOperations;
+    @FXML 
+    private Label labelCurrentAmount;
+    @FXML
+    private Label labelDailyAmount;
+    private int currentAmount=0;
+    private int dailyAmount=0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        table1.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         DBConnect con = new DBConnect();
         table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.getDataBooks());
@@ -92,18 +98,11 @@ public class FXMLBooksPageController implements Initializable {
             con.setBook(q1, q2, q3, q4, i5, i6, q7);
             table1.getColumns().addAll(Book.getColumn(table1));
             table1.setItems(con.getDataBooks());
-            
+
         } catch (Exception ex) {
             System.out.println("Is not a integer!!");
         }
     }
-
-    private void sellButtonHandle(ActionEvent event) {
-         DBConnect con = new DBConnect();
-        table1.getColumns().addAll(Book.getColumn(table1));
-        table1.setItems(con.getDataBooks());
-    }
-
 
     @FXML
     private void handleBackButton(ActionEvent event) {
@@ -127,15 +126,68 @@ public class FXMLBooksPageController implements Initializable {
         stage.close();
     }
 
-    public static ObservableList<Book> getExemple() {
-        ObservableList<Book> data = FXCollections.observableArrayList();
-        data.addAll(new Book("1", "2", "3", "4", 5, 6, "7"));
-        return data;
+    @FXML
+    public void sellBookHandle(ActionEvent event) {
+        String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
+        DBConnect con = new DBConnect();
+        con.sellBook(isbn);
+
+        table1.getColumns().addAll(Book.getColumn(table1));
+        table1.setItems(con.getDataBooks());
+        System.out.println(con.getTitleSellOperation(isbn)+""+con.getPriceSellOperation(isbn));
+        String item=con.getTitleSellOperation(isbn)+""+con.getPriceSellOperation(isbn);
+        textAreaOperations.appendText(item+"\n");
+       int currentPrice=calcPriceWithDiscount(con.getPriceSellOperation(isbn),0);
+       currentAmount=currentAmount+currentPrice;
+        dailyAmount=dailyAmount+currentPrice;
+        labelCurrentAmount.setText("Current amount is"+currentAmount);
+        labelDailyAmount.setText("Daily amount is"+dailyAmount);
     }
 
     @FXML
-    private void sellBookHandle(ActionEvent event) {
+    public void returnButtonHandle(ActionEvent event) {
+        String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
+
+        DBConnect con = new DBConnect();
+        con.returnBook(isbn);
+        table1.getColumns().addAll(Book.getColumn(table1));
+        table1.setItems(con.getDataBooks());
     }
 
-   
+    @FXML
+    public void searchISBNHandle(ActionEvent event) {
+        String isbn = searchText.getText();
+        DBConnect con = new DBConnect();
+
+        table1.getColumns().addAll(Book.getColumn(table1));
+        table1.setItems(con.searchISBN(isbn));
+    }
+
+    @FXML
+    public void searchTitleHandle(ActionEvent event) {
+        String title1 = searchText.getText() + "%";
+        DBConnect con = new DBConnect();
+
+        table1.getColumns().addAll(Book.getColumn(table1));
+        table1.setItems(con.searchTitle(title1));
+    }
+
+    @FXML
+    public void searchAuthorHandle(ActionEvent event) {
+        String author1 = searchText.getText() + "%";
+        DBConnect con = new DBConnect();
+
+        table1.getColumns().addAll(Book.getColumn(table1));
+        table1.setItems(con.searchAuthor(author1));
+    }
+    @FXML
+    public void printButtonHandle(){
+    currentAmount=0;
+    labelCurrentAmount.setText("Current amount is "+currentAmount);
+    
+    }
+    public static int calcPriceWithDiscount(int price,int discount){
+    int finalPrice=price-(price*discount);
+    return finalPrice;
+    }
 }

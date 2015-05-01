@@ -7,8 +7,6 @@ package bookstore;
 
 //import java.beans.Statement;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 //import java.sql.ResultSet;
@@ -17,8 +15,8 @@ public class DBConnect {
 
     private Connection con;
     private Statement st;
-    private ResultSet rs;
-    String firstName,title;
+    private ResultSet rs, rs1;
+    String firstName, title;
 
     public DBConnect() {
         try {
@@ -37,7 +35,7 @@ public class DBConnect {
     public String getFirstName() {
         try {
             String query = "select firstName from employees";
-            rs=st.executeQuery(query);
+            rs = st.executeQuery(query);
             while (rs.next()) {
                 firstName = rs.getString("firstName");
             }
@@ -83,7 +81,7 @@ public class DBConnect {
 
     public void deleteData(String initialer) {
         try {
-            String query = "delete from employees where initialer= ";
+
             st.executeUpdate("delete from employees where initialer= " + "'" + initialer + "'");
         } catch (Exception ex) {
             System.out.println(ex + "222");
@@ -125,25 +123,112 @@ public class DBConnect {
         return data;
     }
 
-    public void sellBook(String isbn) {
+    public void returnBook(String isbn) {
         try {
-            String query = "delete from employees where isbn= ";
-            st.executeUpdate("delete from employees where initialer= " + "'" + isbn + "'");
+
+            st.executeUpdate("update books set quantity=quantity+(1)where isbn= " + "'" + isbn + "'");
         } catch (Exception ex) {
             System.out.println(ex + "222");
         }
     }
-     public String getTitle() {
+
+    public void sellBook(String isbn) {
         try {
-            String query = "select title from books";
-            rs=st.executeQuery(query);
-            while (rs.next()) {
-                title = rs.getString("title");
-            }
+
+            st.executeUpdate("update books set quantity=quantity-(1)where isbn= " + "'" + isbn + "'");
         } catch (Exception ex) {
-            System.out.println(ex + "LLLLLLL");
+            System.out.println(ex + "222");
         }
-        return firstName;
     }
 
+    public ObservableList<Book> searchISBN(String isbn) {
+        ObservableList<Book> data = FXCollections.observableArrayList();
+        try {
+            rs = st.executeQuery("select title,author,ISBN,genre,quantity,price,initialer from books where ISBN like " + "'" + isbn + "'");
+            while (rs.next()) {
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String ISBN = rs.getString("isbn");
+                String genre = rs.getString("genre");
+                Integer quantity = rs.getInt("quantity");
+                Integer price = rs.getInt("price");
+                String initialer = rs.getString("initialer");
+
+                data.addAll(new Book(title, author, ISBN, genre, quantity, price, initialer));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return data;
+
+    }
+
+    public ObservableList<Book> searchTitle(String title1) {
+        ObservableList<Book> data = FXCollections.observableArrayList();
+        try {
+            rs = st.executeQuery("select title,author,ISBN,genre,quantity,price,initialer from books where title like " + "'" + title1 + "'");
+            while (rs.next()) {
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String ISBN = rs.getString("isbn");
+                String genre = rs.getString("genre");
+                Integer quantity = rs.getInt("quantity");
+                Integer price = rs.getInt("price");
+                String initialer = rs.getString("initialer");
+
+                data.addAll(new Book(title, author, ISBN, genre, quantity, price, initialer));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return data;
+
+    }
+
+    public ObservableList<Book> searchAuthor(String author1) {
+        ObservableList<Book> data = FXCollections.observableArrayList();
+        try {
+            rs = st.executeQuery("select title,author,ISBN,genre,quantity,price,initialer from books where author like " + "'" + author1 + "'");
+            while (rs.next()) {
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String ISBN = rs.getString("isbn");
+                String genre = rs.getString("genre");
+                Integer quantity = rs.getInt("quantity");
+                Integer price = rs.getInt("price");
+                String initialer = rs.getString("initialer");
+
+                data.addAll(new Book(title, author, ISBN, genre, quantity, price, initialer));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return data;
+
+    }
+
+    public int getPriceSellOperation(String isbn) {
+        int price = 0;   
+        try {
+            rs = st.executeQuery("select price from books where ISBN like " + "'" + isbn + "'");
+            while (rs.next()) {
+                 price = rs.getInt("price");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return price;
+    }
+     public String getTitleSellOperation(String isbn) {
+        String title= null;   
+        try {
+            rs = st.executeQuery("select title from books where ISBN like " + "'" + isbn + "'");
+            while (rs.next()) {
+                 title = rs.getString("title");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return title;
+    }
 }
