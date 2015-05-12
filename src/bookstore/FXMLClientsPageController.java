@@ -16,7 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 /**
@@ -26,14 +26,15 @@ import javafx.stage.Stage;
  */
 public class FXMLClientsPageController implements Initializable {
     @FXML
-    private Button backButton;
-
+    private TableView <Client>table2=new TableView<Client>();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+         DBConnect con = new DBConnect();
+        table2.getColumns().addAll(Client.getColumn(table2));
+        table2.setItems(con.getDataClients());
     }    
 
     @FXML
@@ -41,14 +42,14 @@ public class FXMLClientsPageController implements Initializable {
           try {
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSelection.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 
         } catch (Exception ex) {
-            Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

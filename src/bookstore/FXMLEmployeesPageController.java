@@ -51,13 +51,16 @@ public class FXMLEmployeesPageController implements Initializable {
     private Label labelError;
     @FXML
     private Button button2;
+     
+        
+    private final DBConnect con = new DBConnect();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    labelError.setText(null);
+        labelError.setText(null);
         button6.setVisible(false);
         textField2.setVisible(false);
         textField3.setVisible(false);
@@ -67,7 +70,6 @@ public class FXMLEmployeesPageController implements Initializable {
         textField7.setVisible(false);
         textField8.setVisible(false);
 
-        DBConnect con = new DBConnect();
         table.getColumns().addAll(Employee.getColumn(table));
         table.setItems(con.getDataEmployees());
     }
@@ -78,20 +80,20 @@ public class FXMLEmployeesPageController implements Initializable {
         try {
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSelection.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 
         } catch (Exception ex) {
-            Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
     private void handleQuitButton(ActionEvent event) {
-        
+
         Stage stage = (Stage) button2.getScene().getWindow();
         stage.close();
     }
@@ -108,7 +110,7 @@ public class FXMLEmployeesPageController implements Initializable {
             textField6.setVisible(true);
             textField7.setVisible(true);
             textField8.setVisible(true);
-        }else{
+        } else {
             labelError.setText("Access denied!");
         }
     }
@@ -127,11 +129,12 @@ public class FXMLEmployeesPageController implements Initializable {
             textField8.setVisible(false);
             String initialer = table.getSelectionModel().getSelectedItem().getInitialer();
             System.out.println(initialer);
-            DBConnect con = new DBConnect();
             con.deleteData(initialer);
+            con.deleteIdUser(initialer);
             table.getColumns().addAll(Employee.getColumn(table));
             table.setItems(con.getDataEmployees());
-        }else{
+            
+        } else {
             labelError.setText("Access denied");
         }
     }
@@ -140,25 +143,37 @@ public class FXMLEmployeesPageController implements Initializable {
     private void handleRegisterButton(ActionEvent event) {
         labelError.setText(null);
         if (DataStorage.getDataStorage().getLogAsManager() == true) {
-            String q2 = textField2.getText();
+            String lastName = textField2.getText();
             textField2.clear();
-            String q3 = textField3.getText();
+            String firstName = textField3.getText();
             textField3.clear();
-            String q4 = textField4.getText();
+            String adress = textField4.getText();
             textField4.clear();
-            String q5 = textField5.getText();
+            String email = textField5.getText();
             textField5.clear();
-            String q6 = textField6.getText();
+            String phone = textField6.getText();
             textField6.clear();
-            String q7 = textField7.getText();
+            String initialer = textField7.getText();
             textField7.clear();
-            String q8 = textField8.getText();
+            String salary = textField8.getText();
             textField8.clear();
             DBConnect connect = new DBConnect();
-            connect.setData(q2, q3, q4, q5, q6, q7, q8);
+            connect.setData(lastName, firstName, adress, email, phone, initialer, salary);
+            connect.setNewId(initialer);
             table.getColumns().addAll(Employee.getColumn(table));
-
-        }else{
+            table.setItems(con.getDataEmployees());
+            DataStorage.getDataStorage().setId_User(initialer);
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLPassword.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Password");
+                stage.setScene(new Scene(root1));
+                stage.show();
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLBooksPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
             labelError.setText("Access denied");
         }
     }

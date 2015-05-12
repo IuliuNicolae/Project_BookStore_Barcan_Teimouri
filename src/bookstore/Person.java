@@ -12,7 +12,7 @@ import javafx.beans.property.StringProperty;
  *
  * @author Iuliu
  */
-public abstract class Persson {
+public abstract class Person {
     
     
     private final StringProperty lastName = new SimpleStringProperty(this, "lastName");
@@ -81,10 +81,10 @@ public abstract class Persson {
         phoneProperty().set(phone);
     }
 
-    public Persson() {
+    public Person() {
     }
 
-    public Persson(String lastname, String firstname, String adress, String email, String phone) {
+    public Person(String lastname, String firstname, String adress, String email, String phone) {
         
         setLastName(lastname);
         setFirstName(firstname);

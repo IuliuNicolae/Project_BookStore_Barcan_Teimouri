@@ -22,9 +22,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -50,12 +48,6 @@ public class FXMLBooksPageController implements Initializable {
     @FXML
     private TextField textField7;
     @FXML
-    private Button sellBookButton;
-    @FXML
-    private Button addBookButton;
-    @FXML
-    private Button backButton;
-    @FXML
     private Button exitButton;
     @FXML
     private TextField searchText;
@@ -65,6 +57,9 @@ public class FXMLBooksPageController implements Initializable {
     private Label labelCurrentAmount;
     @FXML
     private Label labelDailyAmount;
+    @FXML
+    private TextField textFieldClientId;
+            
     private int currentAmount = 0;
     private int dailyAmount = 0;
 
@@ -74,6 +69,7 @@ public class FXMLBooksPageController implements Initializable {
         DBConnect con = new DBConnect();
         table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.getDataBooks());
+        textFieldClientId.setText("0");
     }
 
     @FXML
@@ -111,14 +107,14 @@ public class FXMLBooksPageController implements Initializable {
         try {
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSelection.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 
         } catch (Exception ex) {
-            Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -131,6 +127,7 @@ public class FXMLBooksPageController implements Initializable {
     @FXML
     public void sellBookHandle(ActionEvent event) {
         String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
+        String initialer =DataStorage.getDataStorage().getLoginUser();
         DBConnect con = new DBConnect();
         con.sellBook(isbn);
 
@@ -144,6 +141,10 @@ public class FXMLBooksPageController implements Initializable {
         dailyAmount = dailyAmount + currentPrice;
         labelCurrentAmount.setText("Current amount is " +" "+ currentAmount);
         labelDailyAmount.setText("Daily amount is " +" "+ dailyAmount);
+        
+        int i1=Integer.valueOf(textFieldClientId.getText());
+        con.setClientBook(i1, isbn);
+        con.setEmployeeBook(isbn, initialer);
     }
 
     @FXML

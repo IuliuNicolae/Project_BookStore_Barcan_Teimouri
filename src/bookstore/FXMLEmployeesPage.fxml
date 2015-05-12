@@ -24,7 +24,7 @@
                 <TextField fx:id="textField4" onAction="#handleRegisterButton" promptText="Adress" />
                 <TextField fx:id="textField6" onAction="#handleRegisterButton" promptText="Phone" />
                 <TextField fx:id="textField5" onAction="#handleRegisterButton" promptText="Email" />
-                <TextField fx:id="textField7" onAction="#handleRegisterButton" promptText="Initialer" />
+                <TextField fx:id="textField7" onAction="#handleRegisterButton" promptText="User Name" />
                 <TextField fx:id="textField8" onAction="#handleRegisterButton" promptText="Salary" />
                 <Button fx:id="button6" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="200.0" text="Registrer" />
             </children>

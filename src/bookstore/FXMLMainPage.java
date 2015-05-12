@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  *
  * @author Iuliu
  */
-public class FXMLSelectionController implements Initializable {
+public class FXMLMainPage implements Initializable {
     @FXML
     private Button button1;
     @FXML
@@ -56,7 +56,7 @@ public class FXMLSelectionController implements Initializable {
                 stage.show();
 
             } catch (Exception ex) {
-                Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
 
@@ -72,7 +72,7 @@ public class FXMLSelectionController implements Initializable {
                 stage.show();
 
             } catch (Exception ex) {
-                Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
 
@@ -81,14 +81,14 @@ public class FXMLSelectionController implements Initializable {
           try {
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLLogin.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
 
             } catch (Exception ex) {
-                Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
 
@@ -110,7 +110,7 @@ public class FXMLSelectionController implements Initializable {
                 stage.show();
 
             } catch (Exception ex) {
-                Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
     

@@ -1,6 +1,6 @@
 package bookstore;
 
-import bookstore.Persson;
+import bookstore.Person;
 import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -17,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author Iuliu
  */
-public class Employee extends Persson {
+public class Employee extends Person {
 
     private final StringProperty initialer = new SimpleStringProperty(this, "initialer");
     private final StringProperty salary = new SimpleStringProperty(this, "salary");
@@ -58,7 +58,7 @@ public class Employee extends Persson {
     public static ArrayList<TableColumn<Employee, ?>> getColumn(TableView table) {
         int i;
         ArrayList<TableColumn<Employee, ?>> columns = new ArrayList<TableColumn<Employee, ?>>();
-        String[] columnNames = {"First Name", "Last Name", "Adress", "Email", "Phone", "Initialer", "Salary"};
+        String[] columnNames = {"First Name", "Last Name", "Adress", "Email", "Phone", "User Name", "Salary"};
         String[] variableNames = {"lastn", "first", "adress", "email", "phone", "initialer", "salary"};
         Integer[] column_width = {80, 80, 80, 80, 80, 80, 80};
 

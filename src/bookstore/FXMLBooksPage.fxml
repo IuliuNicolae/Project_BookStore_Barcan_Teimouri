@@ -27,7 +27,6 @@
       <TextField fx:id="searchText" layoutX="458.0" layoutY="47.0" promptText="Title,author..." />
       <Label fx:id="labelDailyAmount" layoutX="17.0" layoutY="51.0" prefHeight="17.0" prefWidth="182.0" text="Daily amount" />
       <TextField fx:id="textFieldClientId" layoutX="153.0" layoutY="461.0" prefHeight="25.0" prefWidth="103.0" promptText="Client's ID" />
-      <TextField fx:id="textFieldEmployeeInitialer" layoutX="257.0" layoutY="461.0" prefHeight="25.0" prefWidth="103.0" promptText="Emplyee's initialer" />
       <MenuButton layoutX="606.0" layoutY="47.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Search">
         <items>
           <MenuItem fx:id="searchISBNButton" mnemonicParsing="false" onAction="#searchISBNHandle" text="ISBN" />

@@ -25,7 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class FXMLMainPageController implements Initializable {
+public class FXMLLoginController implements Initializable {
 
     @FXML
     private Button Button1;
@@ -37,43 +37,44 @@ public class FXMLMainPageController implements Initializable {
     private Label label;
     @FXML
     private TextField text1;
-
     @FXML
     private ImageView imageView;
     @FXML
     private PasswordField pass1;
     @FXML
     Parent root;
-    private String idUser = "user", passUser = "1", idManager = "manager", passManager = "pass2";
+    DBConnect con = new DBConnect();
+    // private String idUser = "user", passUser = "1", idManager = "manager", passManager = "pass2";
     private boolean isConnectedUser = false;
     private boolean isConnectedManager = false;
-  
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Image image = new Image(FXMLMainPageController.class.getResourceAsStream("Papirus.png"));
+        Image image = new Image(FXMLLoginController.class.getResourceAsStream("Papirus.png"));
+        text1.setText(DataStorage.getDataStorage().getId_user());
         imageView.setImage(image);
         Button2.setVisible(false);
 
-         //imageView.fitWidthProperty().bind(imageView.getScene().getWindow().widthProperty());
     }
 
     @FXML
     public void signIn(ActionEvent event) {
+        DataStorage.getDataStorage().setLoginUser(text1.getText());
         label.setText("");
-
-        if (text1.getText().equals(idUser) && pass1.getText().equals(passUser)) {
-            label.setTextFill(Color.GREEN);
-            label.setText("Log in succeded.You can connect to database!");
-            isConnectedUser = true;
-            Button2.setVisible(true);
-            DataStorage.getDataStorage().setLogAsManager(false);
-        } else if (text1.getText().equals(idManager) && pass1.getText().equals(passManager)) {
+        if (pass1.getText().equals(con.getPass(text1.getText())) && con.getIsManagerValues(text1.getText()) == true) {
             label.setTextFill(Color.GREEN);
             label.setText("Log in succeded.You can connect to database!");
             isConnectedManager = true;
             Button2.setVisible(true);
             DataStorage.getDataStorage().setLogAsManager(true);
+
+        } else if (pass1.getText().equals(con.getPass(text1.getText())) && con.getIsManagerValues(text1.getText()) == false) {
+            label.setTextFill(Color.GREEN);
+            label.setText("Log in succeded.You can connect to database!");
+            isConnectedUser = true;
+            Button2.setVisible(true);
+
+            DataStorage.getDataStorage().setLogAsManager(false);
         } else {
             label.setTextFill(Color.RED);
             label.setText("Log in failed!");
@@ -97,15 +98,15 @@ public class FXMLMainPageController implements Initializable {
             try {
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSelection.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
-               // imageView.
+                // imageView.
                 stage.show();
 
             } catch (Exception ex) {
-                Logger.getLogger(FXMLSelectionController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             label.setText("You have to sign in first!");
