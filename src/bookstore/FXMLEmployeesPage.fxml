@@ -13,20 +13,21 @@
             <children>
                 <Button fx:id="button4" mnemonicParsing="false" onAction="#handleNewButton" prefHeight="25.0" prefWidth="102.0" text="New" />
                 <Button fx:id="button5" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="25.0" prefWidth="101.0" text="Delete" />
+            <Button fx:id="printButton" mnemonicParsing="false" onAction="#handlePrintButton" prefHeight="25.0" prefWidth="101.0" text="Print" />
                 <Button fx:id="button1" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="25.0" prefWidth="101.0" text="Go back" />
-                <Button fx:id="button2" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="25.0" prefWidth="100.0" text="Quit" />
+                <Button fx:id="buttonClose" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="25.0" prefWidth="100.0" text="Close" />
             </children>
         </VBox>
         <VBox layoutX="137.0" layoutY="21.0" prefHeight="266.0" prefWidth="76.0">
             <children>
-                <TextField fx:id="textField2" onAction="#handleRegisterButton" promptText="Last Name" />
-                <TextField fx:id="textField3" onAction="#handleRegisterButton" promptText="First Name" />
-                <TextField fx:id="textField4" onAction="#handleRegisterButton" promptText="Adress" />
-                <TextField fx:id="textField6" onAction="#handleRegisterButton" promptText="Phone" />
-                <TextField fx:id="textField5" onAction="#handleRegisterButton" promptText="Email" />
-                <TextField fx:id="textField7" onAction="#handleRegisterButton" promptText="User Name" />
-                <TextField fx:id="textField8" onAction="#handleRegisterButton" promptText="Salary" />
-                <Button fx:id="button6" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="200.0" text="Registrer" />
+                <TextField fx:id="textLastName" onAction="#handleRegisterButton" promptText="Last Name" />
+                <TextField fx:id="textFirstName" onAction="#handleRegisterButton" promptText="First Name" />
+                <TextField fx:id="textAdress" onAction="#handleRegisterButton" promptText="Adress" />
+                <TextField fx:id="textPhone" onAction="#handleRegisterButton" promptText="Phone" />
+                <TextField fx:id="textEmail" onAction="#handleRegisterButton" promptText="Email" />
+                <TextField fx:id="textInitials" onAction="#handleRegisterButton" promptText="User Name" />
+                <TextField fx:id="textSalary" onAction="#handleRegisterButton" promptText="Salary" />
+                <Button fx:id="button6" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="200.0" text="Register" />
             </children>
         </VBox>
       <TableView fx:id="table" layoutX="1.0" layoutY="223.0" prefHeight="177.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="223.0">
@@ -34,6 +35,9 @@
           <TableColumn prefWidth="28.0" text="C1" visible="false" />
         </columns>
       </TableView>
-      <Label fx:id="labelError" layoutX="223.0" layoutY="146.0" prefHeight="17.0" prefWidth="286.0" text="Label" />
+      <Label fx:id="labelError" alignment="CENTER" layoutX="247.0" layoutY="21.0" prefHeight="17.0" prefWidth="286.0" text="Label" />
+      <Button fx:id="changeButton" layoutX="278.0" layoutY="169.0" mnemonicParsing="false" onAction="#handleChangeButton" prefHeight="25.0" prefWidth="200.0" text="Change" />
+      <TextArea fx:id="textViewActivity" layoutX="277.0" layoutY="51.0" prefHeight="93.0" prefWidth="200.0" />
+      <Button fx:id="viewActivityButton" layoutX="277.0" layoutY="142.0" mnemonicParsing="false" onAction="#handleViewActivityButton" prefHeight="25.0" prefWidth="200.0" text="View Activity" />
     </children>
 </AnchorPane>

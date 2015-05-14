@@ -8,12 +8,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLMainPage">
    <children>
-      <VBox layoutX="77.0" layoutY="89.0" prefHeight="200.0" prefWidth="145.0">
+      <VBox layoutX="228.0" layoutY="138.0" prefHeight="124.0" prefWidth="145.0">
          <children>
-            <Button fx:id="button1" mnemonicParsing="false" onAction="#handleEmployeesButton" prefHeight="25.0" prefWidth="146.0" text="Go to employees page" />
-            <Button fx:id="button2" mnemonicParsing="false" onAction="#handleClientsButton" prefHeight="25.0" prefWidth="149.0" text="Go to clients page" />
-            <Button fx:id="button3" mnemonicParsing="false" onAction="#handleBooksPage" prefHeight="25.0" prefWidth="145.0" text="Go to books page" />
-            <Button fx:id="button4" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="25.0" prefWidth="145.0" text="Go back" />
+            <Button fx:id="button1" mnemonicParsing="false" onAction="#handleEmployeesButton" prefHeight="25.0" prefWidth="146.0" text="Employees page" />
+            <Button fx:id="button2" mnemonicParsing="false" onAction="#handleClientsButton" prefHeight="25.0" prefWidth="149.0" text="Clients page" />
+            <Button fx:id="button3" mnemonicParsing="false" onAction="#handleBooksPage" prefHeight="25.0" prefWidth="145.0" text="Books page" />
+            <Button fx:id="button4" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="25.0" prefWidth="145.0" text="Back" />
             <Button fx:id="button5" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="25.0" prefWidth="145.0" text="Quit" />
          </children>
       </VBox>

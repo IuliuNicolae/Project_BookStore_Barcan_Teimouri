@@ -10,6 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLLoginController">
    <children>
+      <ImageView fx:id="imageView" fitHeight="567.0" fitWidth="552.0" layoutX="14.0" layoutY="-2.0" opacity="0.22" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="-2.0" />
       <Label layoutX="284.0" layoutY="21.0" text="Welcome" textFill="#1d8a31">
          <font>
             <Font size="24.0" />
@@ -27,7 +28,6 @@
       <Button fx:id="Button3" layoutX="496.0" layoutY="342.0" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="52.0" text="Exit" />
       <TextField fx:id="text1" layoutX="53.0" layoutY="256.0" onAction="#signIn" promptText="ID" />
       <Label fx:id="label" alignment="CENTER" layoutX="54.0" layoutY="192.0" prefHeight="17.0" prefWidth="519.0" />
-      <ImageView fx:id="imageView" fitHeight="567.0" fitWidth="316.0" layoutX="157.0" opacity="0.22" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="127.0" AnchorPane.topAnchor="0.0" />
       <PasswordField fx:id="pass1" layoutX="53.0" layoutY="281.0" onAction="#signIn" promptText="Password" />
    </children>
 </AnchorPane>

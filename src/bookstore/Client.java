@@ -26,7 +26,7 @@ public class Client extends Person {
         return id;
     }
 
-    public final Integer getId() {
+    public final int getId() {
         return idProperty().get();
     }
 
@@ -38,11 +38,11 @@ public class Client extends Person {
         return total;
     }
 
-    public final Integer getTotal() {
+    public final int getTotal() {
         return totalProperty().get();
     }
 
-    public final void setTotal(int total) {
+    public  void setTotal(int total) {
         totalProperty().set(total);
     }
 
@@ -50,18 +50,18 @@ public class Client extends Person {
         return percent;
     }
 
-    public final Integer getPercent() {
+    public final int getPercent() {
         return percentProperty().get();
     }
 
-    public final void setPercent(int percent) {
+    public  void setPercent(int percent) {
         percentProperty().set(percent);
     }
 
     public Client() {
     }
 
-    public Client(int id, String lastName, String firstName, String adress, String email, String phone, Integer total, Integer percent) {
+    public Client(int id, String lastName, String firstName, String adress, String email, String phone, int total, int percent) {
         super(lastName, firstName, adress, email, phone);
         setId(id);
         setTotal(total);
@@ -76,14 +76,14 @@ public class Client extends Person {
         Integer[] column_width = {70, 70, 70, 60, 60, 70, 90, 70};
 
         i = 0;
-        TableColumn<Client, String> idCol = new TableColumn<>(columnNames[i++]);
+        TableColumn<Client, Integer> idCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, String> lastnCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, String> firstCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, String> adressCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, String> emailCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, String> phoneCol = new TableColumn<>(columnNames[i++]);
-        TableColumn<Client, String> totalCol = new TableColumn<>(columnNames[i++]);
-        TableColumn<Client, String> percentCol = new TableColumn<>(columnNames[i++]);
+        TableColumn<Client, Integer> totalCol = new TableColumn<>(columnNames[i++]);
+        TableColumn<Client, Integer> percentCol = new TableColumn<>(columnNames[i++]);
 
         i = 0;
         idCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));

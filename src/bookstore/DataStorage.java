@@ -13,8 +13,8 @@ public class DataStorage {
 
     private static DataStorage myDataStorage;
     private boolean logAsManager;
-    private String id_user;
     private String loginUser;
+    private int amount, percent, idClient;
 
     public DataStorage() {
     }
@@ -33,16 +33,36 @@ public class DataStorage {
     public boolean getLogAsManager() {
         return logAsManager;
     }
-    public void setId_User(String id_user){
-    this.id_user=id_user;
+
+    public void setIdClient(int idClient) {
+        this.idClient = idClient;
     }
-    public String getId_user(){
-    return id_user;
+
+    public int getIdClient() {
+        return idClient;
     }
-    public void setLoginUser(String loginUser){
-    this.loginUser=loginUser;
+
+    public void setLoginUser(String loginUser) {
+        this.loginUser = loginUser;
     }
-    public String getLoginUser(){
-    return loginUser;
+
+    public String getLoginUser() {
+        return loginUser;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
+
+    public int getPercent() {
+        return percent;
     }
 }

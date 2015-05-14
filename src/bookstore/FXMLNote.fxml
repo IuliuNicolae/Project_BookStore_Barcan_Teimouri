@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLNoteController">
-    
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLNoteController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="171.0" layoutY="65.0" prefHeight="35.0" prefWidth="267.0" text="thank you for your visit !" textFill="#05e805">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="14.0" layoutY="120.0" prefHeight="17.0" prefWidth="122.0" text="Your list is" />
+      <Label layoutX="14.0" layoutY="220.0" text="Entire value:" />
+      <Label layoutX="14.0" layoutY="254.0" text="Discount:" />
+      <Label layoutX="14.0" layoutY="284.0" text="Paid:" />
+      <Label layoutX="11.0" layoutY="319.0" prefHeight="17.0" prefWidth="64.0" text="V.A.T.(6%)" />
+      <Button fx:id="exitButton" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleExitButton" text="Exit" />
+      <Label fx:id="labelEntireAmount" layoutX="122.0" layoutY="220.0" prefHeight="17.0" prefWidth="64.0" />
+      <Label fx:id="labelDiscount" layoutX="122.0" layoutY="254.0" prefHeight="17.0" prefWidth="64.0" />
+      <Label fx:id="labelPaidAmount" layoutX="122.0" layoutY="284.0" prefHeight="17.0" prefWidth="64.0" />
+      <Label fx:id="labelVAT" layoutX="122.0" layoutY="319.0" prefHeight="17.0" prefWidth="64.0" />
+      <Label fx:id="labelNameClient" alignment="CENTER" layoutX="188.0" layoutY="30.0" prefHeight="17.0" prefWidth="225.0" textFill="#0ae88b">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Label fx:id="labelNameEmployee" alignment="CENTER" layoutX="212.0" layoutY="365.0" prefHeight="17.0" prefWidth="314.0" />
+   </children>
 </AnchorPane>

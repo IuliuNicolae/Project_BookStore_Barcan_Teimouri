@@ -9,10 +9,22 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLClientsPageController">
    <children>
       <Button fx:id="backButton" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#backButtonHandle" text="Back" />
-      <TableView fx:id="table2" layoutX="3.0" layoutY="161.0" prefHeight="200.0" prefWidth="593.0">
+      <TableView fx:id="tableClient" layoutX="3.0" layoutY="226.0" prefHeight="135.0" prefWidth="593.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" visible="false" />
         </columns>
       </TableView>
+      <Button fx:id="addButton" layoutX="185.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="25.0" prefWidth="57.0" text="Add" />
+      <Button fx:id="updateButton" layoutX="242.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleUpdateButton" prefHeight="25.0" prefWidth="57.0" text="Update" />
+      <TextField fx:id="textId" layoutX="71.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="ID " />
+      <TextField fx:id="textFirstName" layoutX="128.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="First Name" />
+      <TextField fx:id="textLastName" layoutX="185.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="Last Name" />
+      <TextField fx:id="textAdress" layoutX="242.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="Adress" />
+      <TextField fx:id="textEmail" layoutX="299.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="Email" />
+      <TextField fx:id="textPhone" layoutX="356.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="Phone" />
+      <Label fx:id="labelError" alignment="CENTER" layoutX="69.0" layoutY="136.0" prefHeight="17.0" prefWidth="316.0" />
+      <TextArea fx:id="tableClientBooks" layoutX="413.0" layoutY="54.0" prefHeight="135.0" prefWidth="181.0" />
+      <Button fx:id="viewBooksButton" layoutX="414.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleViewBooksButton" prefHeight="25.0" prefWidth="181.0" text=" View client's books" />
+      <Button fx:id="buttonClose" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleCloseButton" text="Close" />
    </children>
 </AnchorPane>

@@ -27,8 +27,7 @@ import javafx.stage.Stage;
 
 public class FXMLLoginController implements Initializable {
 
-    @FXML
-    private Button Button1;
+   
     @FXML
     private Button Button2;
     @FXML
@@ -51,7 +50,6 @@ public class FXMLLoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Image image = new Image(FXMLLoginController.class.getResourceAsStream("Papirus.png"));
-        text1.setText(DataStorage.getDataStorage().getId_user());
         imageView.setImage(image);
         Button2.setVisible(false);
 

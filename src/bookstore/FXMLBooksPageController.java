@@ -30,21 +30,21 @@ import javafx.stage.Stage;
  * @author Iuliu
  */
 public class FXMLBooksPageController implements Initializable {
-
+    
     @FXML
     private TableView<Book> table1 = new TableView<Book>();
     @FXML
-    private TextField textField1;
+    private TextField textFieldTitle;
     @FXML
-    private TextField textField2;
+    private TextField textFieldAuthor;
     @FXML
-    private TextField textField3;
+    private TextField textFieldISBN;
     @FXML
-    private TextField textField4;
+    private TextField textFieldGenre;
     @FXML
-    private TextField textField5;
+    private TextField textFieldQuantity;
     @FXML
-    private TextField textField6;
+    private TextField textFieldPrice;
     @FXML
     private TextField textField7;
     @FXML
@@ -59,49 +59,47 @@ public class FXMLBooksPageController implements Initializable {
     private Label labelDailyAmount;
     @FXML
     private TextField textFieldClientId;
-            
+    DBConnect con = new DBConnect();
     private int currentAmount = 0;
     private int dailyAmount = 0;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         table1.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        DBConnect con = new DBConnect();
+        
         table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.getDataBooks());
         textFieldClientId.setText("0");
     }
-
+    
     @FXML
     private void addBookHandle(ActionEvent event) {
         try {
-            String q1 = textField1.getText();
-            textField1.clear();
-            String q2 = textField2.getText();
-            textField2.clear();
-            String q3 = textField3.getText();
-            textField3.clear();
-            String q4 = textField4.getText();
-            textField4.clear();
-            String q5 = textField5.getText();
+            String q1 = textFieldTitle.getText();
+            textFieldTitle.clear();
+            String q2 = textFieldAuthor.getText();
+            textFieldAuthor.clear();
+            String q3 = textFieldISBN.getText();
+            textFieldISBN.clear();
+            String q4 = textFieldGenre.getText();
+            textFieldGenre.clear();
+            String q5 = textFieldQuantity.getText();
             int i5 = Integer.valueOf(q5);
-            textField5.clear();
-            String q6 = textField6.getText();
+            textFieldQuantity.clear();
+            String q6 = textFieldPrice.getText();
             int i6 = Integer.valueOf(q6);
-            textField6.clear();
+            textFieldPrice.clear();
             String q7 = textField7.getText();
             textField7.clear();
-
-            DBConnect con = new DBConnect();
+            
             con.setBook(q1, q2, q3, q4, i5, i6, q7);
-            table1.getColumns().addAll(Book.getColumn(table1));
             table1.setItems(con.getDataBooks());
-
+            
         } catch (Exception ex) {
             System.out.println("Is not a integer!!");
         }
     }
-
+    
     @FXML
     private void handleBackButton(ActionEvent event) {
         try {
@@ -112,78 +110,82 @@ public class FXMLBooksPageController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-
+            
         } catch (Exception ex) {
             Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @FXML
     private void handleExitButton(ActionEvent event) {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
-
+    
     @FXML
     public void sellBookHandle(ActionEvent event) {
         String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
-        String initialer =DataStorage.getDataStorage().getLoginUser();
-        DBConnect con = new DBConnect();
+        int idClient = Integer.valueOf(textFieldClientId.getText());
+        DataStorage.getDataStorage().setIdClient(idClient);
         con.sellBook(isbn);
-
-        table1.getColumns().addAll(Book.getColumn(table1));
-        table1.setItems(con.getDataBooks());
+        int percent = con.getPercent(idClient);
+        DataStorage.getDataStorage().setPercent(percent);
+        
         System.out.println(con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn));
-        String item = con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn);
-        textAreaOperations.appendText(item + "\n");
-        int currentPrice = calcPriceWithDiscount(con.getPriceSellOperation(isbn), 0);
+        String currentBook = con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn);
+        textAreaOperations.appendText(currentBook + "\n");
+        
+        int currentPrice = calcPriceWithDiscount(con.getPriceSellOperation(isbn), percent);
+        con.setTotal(idClient, currentPrice);
+        //metoda get total update percent
         currentAmount = currentAmount + currentPrice;
         dailyAmount = dailyAmount + currentPrice;
-        labelCurrentAmount.setText("Current amount is " +" "+ currentAmount);
-        labelDailyAmount.setText("Daily amount is " +" "+ dailyAmount);
+        DataStorage.getDataStorage().setAmount(currentAmount);
+        labelCurrentAmount.setText("Current amount is " + " " + currentAmount);
+        labelDailyAmount.setText("Daily amount is " + " " + dailyAmount);
         
-        int i1=Integer.valueOf(textFieldClientId.getText());
-        con.setClientBook(i1, isbn);
+        con.setClientBook(idClient, isbn);
+        String initialer = DataStorage.getDataStorage().getLoginUser();
         con.setEmployeeBook(isbn, initialer);
+        table1.setItems(con.getDataBooks());
+        
     }
-
+    
     @FXML
     public void returnButtonHandle(ActionEvent event) {
         String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
-
-        DBConnect con = new DBConnect();
+        
         con.returnBook(isbn);
-        table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.getDataBooks());
     }
-
+    
+    @FXML
+    public void handleChangeButton() {
+        String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
+        int actualQuantity = Integer.valueOf(textFieldQuantity.getText());
+        int actualPrice = Integer.valueOf(textFieldPrice.getText());
+        con.changeBookStatus(isbn, actualQuantity, actualPrice);
+        table1.setItems(con.getDataBooks());
+    }
+    
     @FXML
     public void searchISBNHandle(ActionEvent event) {
         String isbn = searchText.getText();
-        DBConnect con = new DBConnect();
-
-        table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.searchISBN(isbn));
     }
-
+    
     @FXML
     public void searchTitleHandle(ActionEvent event) {
         String title1 = searchText.getText() + "%";
-        DBConnect con = new DBConnect();
-
-        table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.searchTitle(title1));
     }
-
+    
     @FXML
     public void searchAuthorHandle(ActionEvent event) {
         String author1 = searchText.getText() + "%";
-        DBConnect con = new DBConnect();
-
-        table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.searchAuthor(author1));
     }
-
+    
     @FXML
     public void printButtonHandle(ActionEvent event) {
         if (currentAmount != 0) {
@@ -200,11 +202,12 @@ public class FXMLBooksPageController implements Initializable {
             } catch (Exception ex) {
                 Logger.getLogger(FXMLBooksPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }labelCurrentAmount.setText(" Current amount");
+        }
+        labelCurrentAmount.setText(" Current amount");
     }
-
+    
     public static int calcPriceWithDiscount(int price, int discount) {
-        int finalPrice = price - (price * discount);
+        int finalPrice = Math.abs(price - ((price * discount) / 100));
         return finalPrice;
     }
 }

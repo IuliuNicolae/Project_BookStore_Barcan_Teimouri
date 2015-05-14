@@ -13,12 +13,12 @@
           <TableColumn prefWidth="75.0" text="C1" visible="false" />
         </columns>
       </TableView>
-      <TextField fx:id="textField1" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="Title" AnchorPane.leftAnchor="0.0" />
-      <TextField fx:id="textField2" layoutX="80.0" layoutY="154.0" prefHeight="25.0" prefWidth="97.0" promptText="Author" />
-      <TextField fx:id="textField3" layoutX="177.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="ISBN" />
-      <TextField fx:id="textField4" layoutX="276.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Genre" />
-      <TextField fx:id="textField5" layoutX="377.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Quantity" />
-      <TextField fx:id="textField6" layoutX="481.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Price" />
+      <TextField fx:id="textFieldTitle" layoutY="154.0" prefHeight="25.0" prefWidth="80.0" promptText="Title" AnchorPane.leftAnchor="0.0" />
+      <TextField fx:id="textFieldAuthor" layoutX="80.0" layoutY="154.0" prefHeight="25.0" prefWidth="97.0" promptText="Author" />
+      <TextField fx:id="textFieldISBN" layoutX="177.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="ISBN" />
+      <TextField fx:id="textFieldGenre" layoutX="276.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Genre" />
+      <TextField fx:id="textFieldQuantity" layoutX="377.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Quantity" />
+      <TextField fx:id="textFieldPrice" layoutX="481.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Price" />
       <TextField fx:id="textField7" layoutX="606.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Client's initialer" AnchorPane.rightAnchor="14.0" />
       <Button fx:id="sellBookButton" layoutX="360.0" layoutY="461.0" mnemonicParsing="false" onAction="#sellBookHandle" prefHeight="25.0" prefWidth="80.0" text="Sell" />
       <Button fx:id="addBookButton" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onAction="#addBookHandle" prefHeight="25.0" prefWidth="103.0" text="Add a new book" />
@@ -26,7 +26,7 @@
       <Button fx:id="exitButton" layoutX="606.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="25.0" prefWidth="80.0" text="Exit" />
       <TextField fx:id="searchText" layoutX="458.0" layoutY="47.0" promptText="Title,author..." />
       <Label fx:id="labelDailyAmount" layoutX="17.0" layoutY="51.0" prefHeight="17.0" prefWidth="182.0" text="Daily amount" />
-      <TextField fx:id="textFieldClientId" layoutX="153.0" layoutY="461.0" prefHeight="25.0" prefWidth="103.0" promptText="Client's ID" />
+      <TextField fx:id="textFieldClientId" layoutX="200.0" layoutY="461.0" prefHeight="25.0" prefWidth="103.0" promptText="Client's ID" />
       <MenuButton layoutX="606.0" layoutY="47.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Search">
         <items>
           <MenuItem fx:id="searchISBNButton" mnemonicParsing="false" onAction="#searchISBNHandle" text="ISBN" />
@@ -49,5 +49,9 @@
       <Button fx:id="printButton" layoutX="606.0" layoutY="97.0" mnemonicParsing="false" onAction="#printButtonHandle" prefHeight="25.0" prefWidth="80.0" text="Print" />
       <TextArea fx:id="textAreaOperations" layoutX="200.0" layoutY="45.0" prefHeight="104.0" prefWidth="242.0" />
       <Label fx:id="labelCurrentAmount" layoutX="15.0" layoutY="101.0" prefHeight="17.0" prefWidth="182.0" text="Current amount" />
+      <Label layoutX="129.0" layoutY="465.0" text="Client's ID" />
+      <Label layoutX="66.0" layoutY="39.0" text="Label" />
+      <Button layoutX="175.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Edit" />
+      <Button fx:id="changeButton" layoutX="377.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleChangeButton" prefHeight="25.0" prefWidth="103.0" text="Change" />
    </children>
 </AnchorPane>

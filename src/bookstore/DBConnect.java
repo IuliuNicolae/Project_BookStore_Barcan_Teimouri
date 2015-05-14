@@ -7,6 +7,7 @@ package bookstore;
 
 //import java.beans.Statement;
 import java.sql.*;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 //import java.sql.ResultSet;
@@ -15,8 +16,8 @@ public class DBConnect {
 
     private Connection con;
     private Statement st;
-    private ResultSet rs, rs1;
-    private String firstName, title, pass;
+    private ResultSet rs;
+    private String firstName, pass, lastNameEmployee, lastNameClient;
     private boolean isManager;
 
     public DBConnect() {
@@ -86,22 +87,57 @@ public class DBConnect {
         } catch (Exception ex) {
             System.out.println(ex + "Delete user");
         }
-
     }
 
-//EMPLOYEE TABEL COMMANDS
-    public String getFirstName(String idUser) {
+    /*   public String editWelcome(String id_user) {
+     String name = null;
+     try {
+     st.executeQuery("select " + "'" + id_user + "'");
+     } catch (Exception ex) {
+     System.out.println(ex + "Delete user");
+     }
+     return name;
+     }*/
+//EMPLOYEE TABEL COMMANDS*****************************************************************************************************************
+    public String getFirstNameLastEmployee() {
         try {
-            String query = "select firstName from employees where ";
+            String query = "select first from employees,login  where employees.initialer=login.id_user&& id_user=\n"
+                    + "(select id_user from login order by id desc limit 1);";
             rs = st.executeQuery(query);
             while (rs.next()) {
-                firstName = rs.getString("firstName");
-                con.close();
+                firstName = rs.getString("first");
             }
         } catch (Exception ex) {
-            System.out.println(ex + "LLLLLLL");
+            System.out.println(ex + "first name last employee");
         }
         return firstName;
+    }
+
+    public String getLastNameEmployee(String initialer) {
+        try {
+            String query = "select lastn from employees where initialer= '" + initialer + "'";
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                lastNameEmployee = rs.getString("lastn");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex + "last name");
+        }
+        return lastNameEmployee;
+    }
+
+    public void updateEmployee(String initialer, String lastName, String firstName,
+            String adress, String email, String phone, String salary) {
+        try {
+
+            st.executeUpdate("update employees"
+                    + "  set lastn =" + "'" + lastName + "'" + ",first = " + "'" + firstName + "'"
+                    + ",adress =" + "'" + adress + "'" + ",email =" + "'" + email + "'" + ",phone =" + "'" + phone + "'"
+                    + ",salary =" + "'" + salary + "'" + " where initialer=" + "'" + initialer + "'");
+
+        } catch (Exception ex) {
+            System.out.println(ex + "JJJ");
+        }
 
     }
 
@@ -141,15 +177,21 @@ public class DBConnect {
         return data;
     }
 
-    public void setData(String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
+    public int setDataEmployee(String lastName, String firstName, String adress, String email,
+            String phone, String initials, String salary) {
+        int controller;
         try {
 
             st.executeUpdate("insert into employees(lastn,first,adress,email,phone,initialer,salary)"
-                    + "  values(" + "'" + s2 + "'" + "," + "'" + s3 + "'" + "," + "'" + s4 + "'" + "," + "'" + s5 + "'" + "," + "'" + s6 + "'" + "," + "'" + s7 + "'" + "," + "'" + s8 + "'" + ")");
-
+                    + "  values(" + "'" + lastName + "'" + "," + "'" + firstName + "'" + "," + "'"
+                    + adress + "'" + "," + "'" + email + "'" + "," + "'" + phone + "'" + "," + "'" + initials + "'" + "," + "'"
+                    + salary + "'" + ")");
+            controller = 0;
         } catch (Exception ex) {
             System.out.println(ex + "JJJ");
+            controller = 1;
         }
+        return controller;
 
     }
 
@@ -208,10 +250,17 @@ public class DBConnect {
 
     public void sellBook(String isbn) {
         try {
-
             st.executeUpdate("update books set quantity=quantity-(1)where isbn= " + "'" + isbn + "'");
         } catch (Exception ex) {
-            System.out.println(ex + "222");
+            System.out.println(ex + "sell book");
+        }
+    }
+
+    public void changeBookStatus(String isbn, int quantity, int price) {
+        try {
+            st.executeUpdate("update books set quantity='" + quantity + "',price='" + price + "'" + "where isbn= " + "'" + isbn + "'");
+        } catch (Exception ex) {
+            System.out.println(ex + "update status");
         }
     }
 
@@ -307,21 +356,21 @@ public class DBConnect {
         return title;
     }
 
-    //Client TABLE COMMNAD
+    //Client TABLE COMMNAD *********************************************************************************************************************
     public ObservableList<Client> getDataClients() {
         ObservableList<Client> data = FXCollections.observableArrayList();
         try {
             String query = "select id,lastn, first,adress,email,phone,total,percent from client";
             rs = st.executeQuery(query);
             while (rs.next()) {
-                Integer id = rs.getInt("id");
+                int id = rs.getInt("id");
                 String lastn = rs.getString("lastn");
                 String first = rs.getString("first");
                 String adress = rs.getString("adress");
                 String email = rs.getString("email");
                 String phone = rs.getString("phone");
-                Integer total = rs.getInt("total");
-                Integer percent = rs.getInt("percent");
+                int total = rs.getInt("total");
+                int percent = rs.getInt("percent");
 
                 data.addAll(new Client(id, lastn, first, adress, email, phone, total, percent));
             }
@@ -329,6 +378,19 @@ public class DBConnect {
             System.out.println(ex);
         }
         return data;
+    }
+
+    public void setNewClient(int id, String lastName, String firstName, String adress, String email, String phone) {
+        try {
+
+            st.executeUpdate("insert into client(id,lastn,first,adress,email,phone,total,percent)"
+                    + "  values(" + "'" + id + "'" + "," + "'" + lastName + "'" + "," + "'" + firstName + "'" + ","
+                    + "'" + adress + "'" + "," + "'" + email + "'" + "," + "'" + phone + "', 0,2)");
+
+        } catch (Exception ex) {
+            System.out.println(ex + "set client error");
+        }
+
     }
 
     public void setClientBook(int i1, String isbn) {
@@ -351,6 +413,89 @@ public class DBConnect {
 
         } catch (Exception ex) {
             System.out.println(ex + "employee sells");
+        }
+
+    }
+
+    public ArrayList<String> controllEmployeeActivity(String initialer) {
+        ArrayList<String> array = new ArrayList();
+
+        try {
+            String query = "select title from books, employee_sells_book where books.ISBN=employee_sells_book.ISBN"
+                    + " && employee_sells_book.initialer=" + "'" + initialer + "'";
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                String b = rs.getString("title");
+                array.add(b);
+            }
+        } catch (Exception ex) {
+            System.out.println("controll fell");
+        }
+        return array;
+    }
+
+    public ArrayList<String> controllClientBooks(int idClient) {
+        ArrayList<String> array = new ArrayList();
+
+        try {
+            String query = "select title from books, client_buys_book where books.ISBN=client_buys_book.isbn"
+                    + " && client_buys_book.id=" + "'" + idClient + "'";
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                String b = rs.getString("title");
+                array.add(b);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex + "controll books fell");
+        }
+        return array;
+    }
+
+    public String getLastNameClient(int id) {
+        try {
+            String query = "select lastn from client where id= '" + id + "'";
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                lastNameClient = rs.getString("lastn");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex + "last name");
+        }
+        return lastNameClient;
+    }
+
+    public int getPercent(int idClient) {
+        int percent = 0;
+        try {
+            rs = st.executeQuery("select percent from client where id=" + "'" + idClient + "'");
+            while (rs.next()) {
+                percent = rs.getInt("percent");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex + " percent fell");
+        }
+        return percent;
+    }
+
+    public void setTotal(int idClient, int amount) {
+        try {
+            st.executeUpdate("update client set total=total+(" + "'" + amount + "'" + ")where id= " + "'" + idClient + "'");
+        } catch (Exception ex) {
+            System.out.println(ex + "set total");
+        }
+    }
+
+    public void updateClient(int id, String lastName, String firstName,
+            String adress, String email, String phone) {
+        try {
+
+            st.executeUpdate("update client"
+                    + "  set lastn =" + "'" + lastName + "'" + ",first = " + "'" + firstName + "'"
+                    + ",adress =" + "'" + adress + "'" + ",email =" + "'" + email + "'" + ",phone =" + "'" + phone + "'"
+                    + " where id=" + id);
+
+        } catch (Exception ex) {
+            System.out.println(ex + "update client");
         }
 
     }
