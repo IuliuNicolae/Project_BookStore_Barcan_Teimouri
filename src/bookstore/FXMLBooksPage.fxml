@@ -19,7 +19,6 @@
       <TextField fx:id="textFieldGenre" layoutX="276.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Genre" />
       <TextField fx:id="textFieldQuantity" layoutX="377.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Quantity" />
       <TextField fx:id="textFieldPrice" layoutX="481.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Price" />
-      <TextField fx:id="textField7" layoutX="606.0" layoutY="154.0" prefHeight="25.0" prefWidth="103.0" promptText="Client's initialer" AnchorPane.rightAnchor="14.0" />
       <Button fx:id="sellBookButton" layoutX="360.0" layoutY="461.0" mnemonicParsing="false" onAction="#sellBookHandle" prefHeight="25.0" prefWidth="80.0" text="Sell" />
       <Button fx:id="addBookButton" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onAction="#addBookHandle" prefHeight="25.0" prefWidth="103.0" text="Add a new book" />
       <Button fx:id="backButton" layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="68.0" text="Back" />
@@ -51,7 +50,6 @@
       <Label fx:id="labelCurrentAmount" layoutX="15.0" layoutY="101.0" prefHeight="17.0" prefWidth="182.0" text="Current amount" />
       <Label layoutX="129.0" layoutY="465.0" text="Client's ID" />
       <Label layoutX="66.0" layoutY="39.0" text="Label" />
-      <Button layoutX="175.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Edit" />
       <Button fx:id="changeButton" layoutX="377.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleChangeButton" prefHeight="25.0" prefWidth="103.0" text="Change" />
    </children>
 </AnchorPane>

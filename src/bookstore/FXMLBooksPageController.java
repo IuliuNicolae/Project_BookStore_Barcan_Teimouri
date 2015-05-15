@@ -5,7 +5,11 @@
  */
 package bookstore;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +34,7 @@ import javafx.stage.Stage;
  * @author Iuliu
  */
 public class FXMLBooksPageController implements Initializable {
-    
+
     @FXML
     private TableView<Book> table1 = new TableView<Book>();
     @FXML
@@ -62,16 +66,19 @@ public class FXMLBooksPageController implements Initializable {
     DBConnect con = new DBConnect();
     private int currentAmount = 0;
     private int dailyAmount = 0;
-    
+    private int temporaryAmountOfClient;
+    private final int percentCondition1 = 5000;
+   
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         table1.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
+
         table1.getColumns().addAll(Book.getColumn(table1));
         table1.setItems(con.getDataBooks());
         textFieldClientId.setText("0");
     }
-    
+
     @FXML
     private void addBookHandle(ActionEvent event) {
         try {
@@ -91,15 +98,15 @@ public class FXMLBooksPageController implements Initializable {
             textFieldPrice.clear();
             String q7 = textField7.getText();
             textField7.clear();
-            
+
             con.setBook(q1, q2, q3, q4, i5, i6, q7);
             table1.setItems(con.getDataBooks());
-            
+
         } catch (Exception ex) {
             System.out.println("Is not a integer!!");
         }
     }
-    
+
     @FXML
     private void handleBackButton(ActionEvent event) {
         try {
@@ -110,55 +117,78 @@ public class FXMLBooksPageController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     private void handleExitButton(ActionEvent event) {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
-    
+
     @FXML
     public void sellBookHandle(ActionEvent event) {
+         ArrayList<String> array = new ArrayList<>();
         String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
         int idClient = Integer.valueOf(textFieldClientId.getText());
         DataStorage.getDataStorage().setIdClient(idClient);
         con.sellBook(isbn);
         int percent = con.getPercent(idClient);
         DataStorage.getDataStorage().setPercent(percent);
-        
+
         System.out.println(con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn));
         String currentBook = con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn);
         textAreaOperations.appendText(currentBook + "\n");
-        
+        array.add(currentBook);
         int currentPrice = calcPriceWithDiscount(con.getPriceSellOperation(isbn), percent);
         con.setTotal(idClient, currentPrice);
-        //metoda get total update percent
-        currentAmount = currentAmount + currentPrice;
+
+        temporaryAmountOfClient = con.getAmountClient(idClient);
+        System.out.print(temporaryAmountOfClient);
+        if (temporaryAmountOfClient >= percentCondition1) {
+            con.modifyPercent(idClient);
+            temporaryAmountOfClient = temporaryAmountOfClient - percentCondition1;
+            con.setTotal(idClient, temporaryAmountOfClient);
+            System.out.println("Your percent was modified");
+        } else {
+            System.out.println("Your percent was not modified");
+        }
+
         dailyAmount = dailyAmount + currentPrice;
+        currentAmount = currentAmount + currentPrice;
         DataStorage.getDataStorage().setAmount(currentAmount);
         labelCurrentAmount.setText("Current amount is " + " " + currentAmount);
         labelDailyAmount.setText("Daily amount is " + " " + dailyAmount);
-        
+
         con.setClientBook(idClient, isbn);
         String initialer = DataStorage.getDataStorage().getLoginUser();
         con.setEmployeeBook(isbn, initialer);
         table1.setItems(con.getDataBooks());
         
+          try {
+            FileOutputStream fos = new FileOutputStream("myfile");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(array);
+            oos.close();
+            fos.close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
+
     
+
     @FXML
     public void returnButtonHandle(ActionEvent event) {
         String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
-        
+
         con.returnBook(isbn);
         table1.setItems(con.getDataBooks());
     }
-    
+
     @FXML
     public void handleChangeButton() {
         String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
@@ -167,25 +197,25 @@ public class FXMLBooksPageController implements Initializable {
         con.changeBookStatus(isbn, actualQuantity, actualPrice);
         table1.setItems(con.getDataBooks());
     }
-    
+
     @FXML
     public void searchISBNHandle(ActionEvent event) {
         String isbn = searchText.getText();
         table1.setItems(con.searchISBN(isbn));
     }
-    
+
     @FXML
     public void searchTitleHandle(ActionEvent event) {
         String title1 = searchText.getText() + "%";
         table1.setItems(con.searchTitle(title1));
     }
-    
+
     @FXML
     public void searchAuthorHandle(ActionEvent event) {
         String author1 = searchText.getText() + "%";
         table1.setItems(con.searchAuthor(author1));
     }
-    
+
     @FXML
     public void printButtonHandle(ActionEvent event) {
         if (currentAmount != 0) {
@@ -205,9 +235,12 @@ public class FXMLBooksPageController implements Initializable {
         }
         labelCurrentAmount.setText(" Current amount");
     }
-    
+
     public static int calcPriceWithDiscount(int price, int discount) {
         int finalPrice = Math.abs(price - ((price * discount) / 100));
         return finalPrice;
     }
+
+    public static void serializeArray() {}
+      
 }

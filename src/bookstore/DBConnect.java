@@ -476,6 +476,28 @@ public class DBConnect {
         }
         return percent;
     }
+    public int getAmountClient(int idClient){
+        int amount = 0;
+        try {
+            rs = st.executeQuery("select total from client where id=" + "'" + idClient + "'");
+            while (rs.next()) {
+                amount = rs.getInt("total");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex + " amount fell");
+        }
+        return amount;
+    }
+     public void modifyPercent(int idClient) {
+       
+        try {
+             st.executeUpdate("update client set percent=percent+(5) where id=" + "'" + idClient + "'");
+            
+        } catch (Exception ex) {
+            System.out.println(ex + " modify percent fell");
+        }
+        
+    }
 
     public void setTotal(int idClient, int amount) {
         try {

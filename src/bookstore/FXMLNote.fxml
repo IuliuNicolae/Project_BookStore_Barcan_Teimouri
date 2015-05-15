@@ -29,5 +29,6 @@
             <Font size="24.0" />
          </font></Label>
       <Label fx:id="labelNameEmployee" alignment="CENTER" layoutX="212.0" layoutY="365.0" prefHeight="17.0" prefWidth="314.0" />
+      <TextArea fx:id="textAreaNote" layoutX="313.0" layoutY="93.0" prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

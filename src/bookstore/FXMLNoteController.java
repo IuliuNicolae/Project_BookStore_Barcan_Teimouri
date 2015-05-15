@@ -5,13 +5,18 @@
  */
 package bookstore;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 /**
@@ -35,6 +40,7 @@ public class FXMLNoteController implements Initializable {
     private Label labelNameEmployee;
     @FXML
     private Label labelNameClient;
+    @FXML TextArea textAreaNote;
     private float vat;
     private int amount, percent, entireAmount, discount, idClient;
     private String initialer, lastNameEmployee, lastNameClient;
@@ -68,7 +74,29 @@ public class FXMLNoteController implements Initializable {
         labelNameEmployee.setText("On duty: " +lastNameEmployee );
         System.out.println(lastNameEmployee);
         System.out.println(initialer);
-    }
+           ArrayList<String> arraylist= new ArrayList<String>();
+        try
+        {
+            FileInputStream fis = new FileInputStream("myfile");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            arraylist = (ArrayList) ois.readObject();
+            ois.close();
+            fis.close();
+         }catch(IOException ioe){
+             ioe.printStackTrace();
+             return;
+          }catch(ClassNotFoundException c){
+             System.out.println("Class not found");
+             c.printStackTrace();
+             return;
+          }
+        for(String tmp: arraylist){
+            System.out.println(tmp);
+               textAreaNote.appendText(tmp + "\n");
+        }
+   }
+        
+    
 
     @FXML
     public void handleExitButton(ActionEvent event) {
