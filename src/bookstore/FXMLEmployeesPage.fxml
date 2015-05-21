@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLEmployeesPageController">
     <children>
-        <VBox layoutX="22.0" layoutY="21.0" prefHeight="177.0" prefWidth="101.0">
+        <VBox layoutX="22.0" layoutY="21.0" prefHeight="177.0" prefWidth="101.0" AnchorPane.leftAnchor="22.0">
             <children>
                 <Button fx:id="button4" mnemonicParsing="false" onAction="#handleNewButton" prefHeight="25.0" prefWidth="102.0" text="New" />
                 <Button fx:id="button5" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="25.0" prefWidth="101.0" text="Delete" />
@@ -18,7 +18,7 @@
                 <Button fx:id="buttonClose" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="25.0" prefWidth="100.0" text="Close" />
             </children>
         </VBox>
-        <VBox layoutX="137.0" layoutY="21.0" prefHeight="266.0" prefWidth="76.0">
+        <VBox layoutX="131.0" layoutY="21.0" prefHeight="195.0" prefWidth="76.0" AnchorPane.leftAnchor="131.0">
             <children>
                 <TextField fx:id="textLastName" onAction="#handleRegisterButton" promptText="Last Name" />
                 <TextField fx:id="textFirstName" onAction="#handleRegisterButton" promptText="First Name" />
@@ -27,17 +27,21 @@
                 <TextField fx:id="textEmail" onAction="#handleRegisterButton" promptText="Email" />
                 <TextField fx:id="textInitials" onAction="#handleRegisterButton" promptText="User Name" />
                 <TextField fx:id="textSalary" onAction="#handleRegisterButton" promptText="Salary" />
-                <Button fx:id="button6" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="200.0" text="Register" />
+                <Button fx:id="buttonRegister" mnemonicParsing="false" onAction="#handleRegisterButton" prefHeight="25.0" prefWidth="200.0" text="Register" />
             </children>
         </VBox>
-      <TableView fx:id="table" layoutX="1.0" layoutY="223.0" prefHeight="177.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="223.0">
+      <Label fx:id="labelError" alignment="CENTER" layoutX="247.0" layoutY="21.0" prefHeight="17.0" prefWidth="286.0" text="Label" />
+      <Button fx:id="changeButton" layoutX="276.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleChangeButton" prefHeight="25.0" prefWidth="200.0" text="Change" AnchorPane.leftAnchor="276.0" AnchorPane.rightAnchor="124.0" />
+      <TextArea fx:id="textViewActivity" layoutX="276.0" layoutY="96.0" prefHeight="93.0" prefWidth="200.0" AnchorPane.leftAnchor="276.0" AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="96.0" />
+      <Button fx:id="viewActivityButton" layoutX="276.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleViewActivityButton" prefHeight="25.0" prefWidth="200.0" text="View Activity" AnchorPane.leftAnchor="276.0" AnchorPane.rightAnchor="124.0" />
+      <TableView fx:id="tableEmployees" layoutX="5.0" layoutY="221.0" prefHeight="177.0" prefWidth="594.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="221.0">
         <columns>
           <TableColumn prefWidth="28.0" text="C1" visible="false" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
-      <Label fx:id="labelError" alignment="CENTER" layoutX="247.0" layoutY="21.0" prefHeight="17.0" prefWidth="286.0" text="Label" />
-      <Button fx:id="changeButton" layoutX="278.0" layoutY="169.0" mnemonicParsing="false" onAction="#handleChangeButton" prefHeight="25.0" prefWidth="200.0" text="Change" />
-      <TextArea fx:id="textViewActivity" layoutX="277.0" layoutY="51.0" prefHeight="93.0" prefWidth="200.0" />
-      <Button fx:id="viewActivityButton" layoutX="277.0" layoutY="142.0" mnemonicParsing="false" onAction="#handleViewActivityButton" prefHeight="25.0" prefWidth="200.0" text="View Activity" />
+      <Button fx:id="graphicButton" layoutX="326.0" layoutY="188.0" mnemonicParsing="false" onAction="#graphicEmployeesHandler" prefHeight="25.0" prefWidth="100.0" text="Graphic" AnchorPane.rightAnchor="174.0" />
     </children>
 </AnchorPane>

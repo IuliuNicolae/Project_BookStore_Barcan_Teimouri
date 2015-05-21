@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 public class FXMLEmployeesPageController implements Initializable {
 
     @FXML
-    private TableView<Employee> table = new TableView<Employee>();
+    private TableView<Employee> tableEmployees = new TableView<Employee>();
     @FXML
     private TextField textLastName;
     @FXML
@@ -48,14 +48,16 @@ public class FXMLEmployeesPageController implements Initializable {
     @FXML
     private TextField textSalary;
     @FXML
-    private Button button6;
+    private Button buttonRegister;
     @FXML
     private Label labelError;
     @FXML
     private Button buttonClose;
+
     @FXML
     private TextArea textViewActivity;
-    private final DBConnect con = new DBConnect();
+    private final DBConnection dbConnection = new DBConnection();
+    private boolean isManager;
 
     @FXML
     private Button changeButton;
@@ -66,7 +68,7 @@ public class FXMLEmployeesPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         labelError.setText(null);
-        button6.setVisible(false);
+        buttonRegister.setVisible(false);
         changeButton.setVisible(false);
         textLastName.setVisible(false);
         textFirstName.setVisible(false);
@@ -75,9 +77,11 @@ public class FXMLEmployeesPageController implements Initializable {
         textPhone.setVisible(false);
         textInitials.setVisible(false);
         textSalary.setVisible(false);
-        table.getColumns().addAll(Employee.getColumn(table));
-        table.setItems(con.getDataEmployees());
+        tableEmployees.getColumns().addAll(Employee.getColumn(tableEmployees));
+        tableEmployees.setItems(dbConnection.getDataEmployees());
         labelError.setTextFill(Color.RED);
+        isManager = DataStorage.getDataStorage().getLogAsManager();
+
     }
 
     @FXML
@@ -88,7 +92,7 @@ public class FXMLEmployeesPageController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 630, 565);
             stage.setScene(scene);
             stage.show();
 
@@ -107,9 +111,9 @@ public class FXMLEmployeesPageController implements Initializable {
     @FXML
     private void handleNewButton(ActionEvent event) {
         labelError.setText(null);
-        if (DataStorage.getDataStorage().getLogAsManager() == true) {
+        if (isManager == true) {
             changeButton.setVisible(false);
-            button6.setVisible(true);
+            buttonRegister.setVisible(true);
             textLastName.setVisible(true);
             textFirstName.setVisible(true);
             textAdress.setVisible(true);
@@ -125,8 +129,8 @@ public class FXMLEmployeesPageController implements Initializable {
     @FXML
     private void handleDeleteButton(ActionEvent event) {
         labelError.setText(null);
-        if (DataStorage.getDataStorage().getLogAsManager() == true) {
-            button6.setVisible(false);
+        if (isManager == true) {
+            buttonRegister.setVisible(false);
             changeButton.setVisible(false);
             textLastName.setVisible(false);
             textFirstName.setVisible(false);
@@ -135,14 +139,14 @@ public class FXMLEmployeesPageController implements Initializable {
             textPhone.setVisible(false);
             textInitials.setVisible(false);
             textSalary.setVisible(false);
-            String initialer = table.getSelectionModel().getSelectedItem().getInitialer();
+            String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
             if ("manager".equals(initialer)) {
                 labelError.setText("Is not possible to delete this row!");
             } else {
                 System.out.println(initialer);
-                con.deleteData(initialer);
-                con.deleteIdUser(initialer);
-                table.setItems(con.getDataEmployees());
+                dbConnection.deleteData(initialer);
+                dbConnection.deleteIdUser(initialer);
+                tableEmployees.setItems(dbConnection.getDataEmployees());
             }
         } else {
             labelError.setText("Access denied");
@@ -152,38 +156,45 @@ public class FXMLEmployeesPageController implements Initializable {
     @FXML
     private void handleRegisterButton(ActionEvent event) {
         labelError.setText(null);
-        if (DataStorage.getDataStorage().getLogAsManager() == true) {
-            String lastName = textLastName.getText();
-            textLastName.clear();
-            String firstName = textFirstName.getText();
-            textFirstName.clear();
-            String adress = textAdress.getText();
-            textAdress.clear();
-            String email = textEmail.getText();
-            textEmail.clear();
-            String phone = textPhone.getText();
-            textPhone.clear();
-            String initials = textInitials.getText();
-            textInitials.clear();
-            String salary = textSalary.getText();
-            textSalary.clear();
+        if (isManager == true) {
+            try {
+                String lastName = textLastName.getText();
+                textLastName.clear();
+                String firstName = textFirstName.getText();
+                textFirstName.clear();
+                String adress = textAdress.getText();
+                textAdress.clear();
+                String email = textEmail.getText();
+                textEmail.clear();
+                String temporaryPhone = textPhone.getText();
+                int phone = Integer.valueOf(temporaryPhone);
+                textPhone.clear();
+                String initials = textInitials.getText();
+                textInitials.clear();
+                String temporarySalary = textSalary.getText();
+                int salary = Integer.valueOf(temporarySalary);
+                textSalary.clear();
 
-            con.setNewId(initials);
-            int controller = con.setDataEmployee(lastName, firstName, adress, email, phone, initials, salary);
-            if (controller == 1) {
-                labelError.setText("Initials exist!!");
-            } else {
-                table.setItems(con.getDataEmployees());
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLPassword.fxml"));
-                    Parent root1 = (Parent) fxmlLoader.load();
-                    Stage stage = new Stage();
-                    stage.setTitle("Password");
-                    stage.setScene(new Scene(root1));
-                    stage.show();
-                } catch (Exception ex) {
-                    Logger.getLogger(FXMLBooksPageController.class.getName()).log(Level.SEVERE, null, ex);
+                dbConnection.setNewId(initials);
+                int controller = dbConnection.setDataEmployee(lastName, firstName, adress, email, phone, initials, salary);
+                if (controller == 1) {
+                    labelError.setText("Initials exist!!");
+
+                } else {
+                    tableEmployees.setItems(dbConnection.getDataEmployees());
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLPassword.fxml"));
+                        Parent root1 = (Parent) fxmlLoader.load();
+                        Stage stage = new Stage();
+                        stage.setTitle("Password");
+                        stage.setScene(new Scene(root1));
+                        stage.show();
+                    } catch (Exception ex) {
+                        Logger.getLogger(FXMLBooksPageController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+            } catch (Exception ex) {
+                labelError.setText("Is not a integer!");
             }
         } else {
             labelError.setText("Access denied");
@@ -194,8 +205,8 @@ public class FXMLEmployeesPageController implements Initializable {
     private void handlePrintButton(ActionEvent event) {
         labelError.setText(null);
 
-        if (DataStorage.getDataStorage().getLogAsManager() == true) {
-            button6.setVisible(false);
+        if (isManager == true) {
+            buttonRegister.setVisible(false);
             changeButton.setVisible(true);
             textLastName.setVisible(true);
             textFirstName.setVisible(true);
@@ -210,36 +221,65 @@ public class FXMLEmployeesPageController implements Initializable {
 
     @FXML
     private void handleChangeButton(ActionEvent event) {
-        String lastName = textLastName.getText();
-        textLastName.clear();
-        String firstName = textFirstName.getText();
-        textFirstName.clear();
-        String adress = textAdress.getText();
-        textAdress.clear();
-        String email = textEmail.getText();
-        textEmail.clear();
-        String phone = textPhone.getText();
-        textPhone.clear();
-        String salary = textSalary.getText();
-        textSalary.clear();
-        String initialer = table.getSelectionModel().getSelectedItem().getInitialer();
+        labelError.setText(null);
+        if (isManager == true) {
+            try {
+                String lastName = textLastName.getText();
+                textLastName.clear();
+                String firstName = textFirstName.getText();
+                textFirstName.clear();
+                String adress = textAdress.getText();
+                textAdress.clear();
+                String email = textEmail.getText();
+                textEmail.clear();
+                String temporaryPhone = textPhone.getText();
+                int phone = Integer.valueOf(temporaryPhone);
+                textPhone.clear();
+                String temporarySalary = textSalary.getText();
+                int salary = Integer.valueOf(temporarySalary);
+                textSalary.clear();
+                String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
 
-        con.updateEmployee(initialer, lastName, firstName, adress, email, phone, salary);
-        table.setItems(con.getDataEmployees());
-
-    }
-
-    @FXML
-    public void handleViewActivityButton(ActionEvent event) {
-        textViewActivity.clear();
-        if (DataStorage.getDataStorage().getLogAsManager() == true) {
-            String initialer = table.getSelectionModel().getSelectedItem().getInitialer();
-            for (int i = 0; i < con.controllEmployeeActivity(initialer).size(); i++) {
-                textViewActivity.appendText(con.controllEmployeeActivity(initialer).get(i) + "\n");
+                dbConnection.updateEmployee(initialer, lastName, firstName, adress, email, phone, salary);
+                tableEmployees.setItems(dbConnection.getDataEmployees());
+            } catch (Exception ex) {
+                System.out.println("Is not a integer!");
+                labelError.setText("Is not a integer!");
             }
         } else {
             labelError.setText("Acces denied!");
         }
     }
 
+    @FXML
+    public void handleViewActivityButton(ActionEvent event) {
+        textViewActivity.clear();
+        if (isManager == true) {
+            String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
+            for (int i = 0; i < dbConnection.controllEmployeeActivity(initialer).size(); i++) {
+                textViewActivity.appendText(dbConnection.controllEmployeeActivity(initialer).get(i) + "\n");
+            }
+
+        } else {
+            labelError.setText("Acces denied!");
+        }
+    }
+
+    @FXML
+    public void graphicEmployeesHandler(ActionEvent event) {
+        if (isManager == true) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLGraphicEmployees.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setTitle("Graphic of employees activity");
+                stage.setScene(new Scene(root1));
+                stage.show();
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLBooksPageController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            labelError.setText("Acces denied!");
+        }
+    }
 }

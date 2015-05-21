@@ -26,7 +26,7 @@ public class Book {
     private final StringProperty genre = new SimpleStringProperty(this, "genre");
     private final IntegerProperty quantity = new SimpleIntegerProperty(this, "quantity");
     private final IntegerProperty price = new SimpleIntegerProperty(this, "price");
-    private final StringProperty initialer = new SimpleStringProperty(this, "initialer");
+   
 
     public StringProperty titleProperty() {
         return title;
@@ -100,29 +100,18 @@ public class Book {
         priceProperty().set(price);
     }
 
-    public StringProperty initialerProperty() {
-        return initialer;
-    }
-
-    public String getInitialer() {
-        return initialerProperty().get();
-    }
-
-    public final void setInitialer(String initialer) {
-        initialerProperty().set(initialer);
-    }
-
+   
     public Book() {
     }
 
-    public Book(String title, String author, String isbn, String genre, int quantity, int price, String initialer) {
+    public Book(String title, String author, String isbn, String genre, int quantity, int price) {
         setTitle(title);
         setAuthor(author);
         setIsbn(isbn);
         setGenre(genre);
         setQuantity(quantity);
         setPrice(price);
-        setInitialer(initialer);
+        
     }
 
 
@@ -140,7 +129,7 @@ public class Book {
         TableColumn<Book, String> genreCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Book, Integer> quantityCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Book, Integer> priceCol = new TableColumn<>(columnNames[i++]);
-        TableColumn<Book, String> initialerCol = new TableColumn<>(columnNames[i++]);
+       
         
          i = 0;
         titleCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
@@ -149,7 +138,7 @@ public class Book {
         genreCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
         quantityCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
         priceCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
-        //initialerCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
+       
 
        i = 0;
         titleCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
@@ -158,7 +147,7 @@ public class Book {
         genreCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
         quantityCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
         priceCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
-        initialerCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
+       
         
         columns.add(titleCol);
         columns.add(authorCol);
@@ -166,7 +155,7 @@ public class Book {
         columns.add(genreCol);
         columns.add(quantityCol);
         columns.add(priceCol);
-        columns.add(initialerCol);
+       
         return columns;
     }
     

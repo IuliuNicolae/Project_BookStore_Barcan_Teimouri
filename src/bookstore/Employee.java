@@ -2,6 +2,8 @@ package bookstore;
 
 import bookstore.Person;
 import java.util.ArrayList;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TableColumn;
@@ -20,7 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class Employee extends Person {
 
     private final StringProperty initialer = new SimpleStringProperty(this, "initialer");
-    private final StringProperty salary = new SimpleStringProperty(this, "salary");
+    private final IntegerProperty salary = new SimpleIntegerProperty(this, "salary");
 
     public StringProperty initialerProperty() {
         return initialer;
@@ -34,22 +36,22 @@ public class Employee extends Person {
         initialerProperty().set(title);
     }
 
-    public StringProperty salaryProperty() {
+    public IntegerProperty salaryProperty() {
         return salary;
     }
 
-    public final String getSalary() {
+    public final int getSalary() {
         return salaryProperty().get();
     }
 
-    public final void setSalary(String salary) {
+    public final void setSalary(int salary) {
         salaryProperty().set(salary);
     }
 
     public Employee() {
     }
 
-    public Employee(String lastName, String firstName, String adress, String email, String phone, String initialer, String salary) {
+    public Employee(String lastName, String firstName, String adress, String email, int phone, String initialer, int salary) {
         super(lastName, firstName, adress, email, phone);
         setInitialer(initialer);
         setSalary(salary);
@@ -67,9 +69,9 @@ public class Employee extends Person {
         TableColumn<Employee, String> firstCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Employee, String> adressCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Employee, String> emailCol = new TableColumn<>(columnNames[i++]);
-        TableColumn<Employee, String> phoneCol = new TableColumn<>(columnNames[i++]);
+        TableColumn<Employee, Integer> phoneCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Employee, String> initialerCol = new TableColumn<>(columnNames[i++]);
-        TableColumn<Employee, String> salaryCol = new TableColumn<>(columnNames[i++]);
+        TableColumn<Employee, Integer> salaryCol = new TableColumn<>(columnNames[i++]);
 
         i = 0;
         lastnCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));

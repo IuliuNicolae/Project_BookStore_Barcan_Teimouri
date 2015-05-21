@@ -42,7 +42,7 @@ public class Client extends Person {
         return totalProperty().get();
     }
 
-    public  void setTotal(int total) {
+    public void setTotal(int total) {
         totalProperty().set(total);
     }
 
@@ -54,14 +54,14 @@ public class Client extends Person {
         return percentProperty().get();
     }
 
-    public  void setPercent(int percent) {
+    public void setPercent(int percent) {
         percentProperty().set(percent);
     }
 
     public Client() {
     }
 
-    public Client(int id, String lastName, String firstName, String adress, String email, String phone, int total, int percent) {
+    public Client(int id, String lastName, String firstName, String adress, String email, int phone, int total, int percent) {
         super(lastName, firstName, adress, email, phone);
         setId(id);
         setTotal(total);
@@ -81,7 +81,7 @@ public class Client extends Person {
         TableColumn<Client, String> firstCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, String> adressCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, String> emailCol = new TableColumn<>(columnNames[i++]);
-        TableColumn<Client, String> phoneCol = new TableColumn<>(columnNames[i++]);
+        TableColumn<Client, Integer> phoneCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, Integer> totalCol = new TableColumn<>(columnNames[i++]);
         TableColumn<Client, Integer> percentCol = new TableColumn<>(columnNames[i++]);
 
@@ -96,6 +96,7 @@ public class Client extends Person {
         percentCol.setCellValueFactory(new PropertyValueFactory<>(variableNames[i++]));
 
         i = 0;
+
         idCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
         lastnCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
         firstCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
@@ -104,6 +105,7 @@ public class Client extends Person {
         phoneCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
         totalCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
         percentCol.prefWidthProperty().bind(table.prefWidthProperty().divide(560 / column_width[i++]));
+        //table.resizeColumn(totalCol, i);
 
         columns.add(idCol);
         columns.add(lastnCol);

@@ -33,8 +33,6 @@ public class FXMLClientsPageController implements Initializable {
     @FXML
     private Button buttonClose;
     @FXML
-    private TableView<Client> tableClient = new TableView<Client>();
-    @FXML
     private TextField textId;
     @FXML
     private TextField textLastName;
@@ -50,7 +48,9 @@ public class FXMLClientsPageController implements Initializable {
     private Label labelError;
     @FXML
     private TextArea tableClientBooks;
-    DBConnect con = new DBConnect();
+    DBConnection dbConnection = new DBConnection();
+    @FXML
+    private TableView<Client> tableClient = new TableView<Client>();
 
     /**
      * Initializes the controller class.
@@ -59,7 +59,7 @@ public class FXMLClientsPageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         tableClient.getColumns().addAll(Client.getColumn(tableClient));
-        tableClient.setItems(con.getDataClients());
+        tableClient.setItems(dbConnection.getDataClients());
     }
 
     @FXML
@@ -69,7 +69,7 @@ public class FXMLClientsPageController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 630, 565);
             stage.setScene(scene);
             stage.show();
 
@@ -86,6 +86,7 @@ public class FXMLClientsPageController implements Initializable {
 
     @FXML
     private void handleAddButton(ActionEvent event) {
+        labelError.setText("");
         try {
             int id = Integer.valueOf(textId.getText());
             textId.clear();
@@ -97,36 +98,45 @@ public class FXMLClientsPageController implements Initializable {
             textAdress.clear();
             String email = textEmail.getText();
             textEmail.clear();
-            String phone = textPhone.getText();
+            String temporaryPhone = textPhone.getText();
+            int phone = Integer.valueOf(temporaryPhone);
             textPhone.clear();
-            con.setNewClient(id, lastName, firstName, adress, email, phone);
+            dbConnection.setNewClient(id, lastName, firstName, adress, email, phone);
         } catch (Exception ex) {
             System.out.println("Problem");
             labelError.setText("Id is not integer");
         }
 
-         tableClient.setItems(con.getDataClients());
+        tableClient.setItems(dbConnection.getDataClients());
     }
 
     @FXML
     private void handleUpdateButton(ActionEvent event) {
-        String lastName = textLastName.getText();
-        textLastName.clear();
-        String firstName = textFirstName.getText();
-        textFirstName.clear();
-        String adress = textAdress.getText();
-        textAdress.clear();
-        String email = textEmail.getText();
-        textEmail.clear();
-        String phone = textPhone.getText();
-        textPhone.clear();
-        int idClient = tableClient.getSelectionModel().getSelectedItem().getId();
+        labelError.setText("");
+        try {
+            labelError.setText("");
+            String lastName = textLastName.getText();
+            textLastName.clear();
+            String firstName = textFirstName.getText();
+            textFirstName.clear();
+            String adress = textAdress.getText();
+            textAdress.clear();
+            String email = textEmail.getText();
+            textEmail.clear();
+            String temporaryPhone = textPhone.getText();
+            int phone = Integer.valueOf(temporaryPhone);
+            textPhone.clear();
+            int idClient = tableClient.getSelectionModel().getSelectedItem().getId();
 
-        if (idClient > 0) {
-            con.updateClient(idClient, firstName, lastName, adress, email, phone);
-             tableClient.setItems(con.getDataClients());
-        } else {
-            labelError.setText("You should not change this client!");
+            if (idClient > 0) {
+                dbConnection.updateClient(idClient, firstName, lastName, adress, email, phone);
+                tableClient.setItems(dbConnection.getDataClients());
+            } else {
+                labelError.setText("You should not change this client!");
+            }
+        } catch (Exception ex) {
+            labelError.setText("Is not a integer!!");
+            System.out.println("Is not a integer!");
         }
     }
 
@@ -135,10 +145,26 @@ public class FXMLClientsPageController implements Initializable {
         tableClientBooks.clear();
         int idClient = tableClient.getSelectionModel().getSelectedItem().getId();
 
-        for (int i = 0; i < con.controllClientBooks(idClient).size(); i++) {
-            tableClientBooks.appendText(con.controllClientBooks(idClient).get(i) + "\n");
+        for (int i = 0; i < dbConnection.controllClientBooks(idClient).size(); i++) {
+            tableClientBooks.appendText(dbConnection.controllClientBooks(idClient).get(i) + "\n");
         }
 
+    }
+
+    @FXML
+    private void handleGraphicButton(ActionEvent event) {
+        int idClientGraphic=tableClient.getSelectionModel().getSelectedItem().getId();
+        DataStorage.getDataStorage().setIdClient(idClientGraphic);
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLGraphicClient.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Graphic of clients favorite genres");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLBooksPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

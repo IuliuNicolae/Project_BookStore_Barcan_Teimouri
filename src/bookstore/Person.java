@@ -5,6 +5,8 @@
  */
 package bookstore;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -19,7 +21,7 @@ public abstract class Person {
     private final StringProperty firstName = new SimpleStringProperty(this, "firstName");
     private final StringProperty email = new SimpleStringProperty(this, "email");
     private final StringProperty adress = new SimpleStringProperty(this, "adress");
-    private final StringProperty phone = new SimpleStringProperty(this, "phone");
+    private final IntegerProperty phone = new SimpleIntegerProperty(this, "phone");
 
     public StringProperty firstProperty() {
         return firstName;
@@ -69,22 +71,22 @@ public abstract class Person {
         adressProperty().set(adress);
     }
 
-    public StringProperty phoneProperty() {
+    public IntegerProperty phoneProperty() {
         return phone;
     }
 
-    public final String getPhone() {
+    public final int getPhone() {
         return phoneProperty().get();
     }
 
-    public final void setPhone(String phone) {
+    public final void setPhone(int phone) {
         phoneProperty().set(phone);
     }
 
     public Person() {
     }
 
-    public Person(String lastname, String firstname, String adress, String email, String phone) {
+    public Person(String lastname, String firstname, String adress, String email, int phone) {
         
         setLastName(lastname);
         setFirstName(firstname);

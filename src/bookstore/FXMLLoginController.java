@@ -5,7 +5,14 @@
  */
 package bookstore;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Enumeration;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,89 +33,126 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class FXMLLoginController implements Initializable {
-
-   
+    
     @FXML
-    private Button Button2;
+    private Button connectButton;
     @FXML
-    private Button Button3;
+    private Button exitButton;
     @FXML
-    private Label label;
+    private Label labelMessages;
     @FXML
-    private TextField text1;
+    private TextField idText;
     @FXML
     private ImageView imageView;
     @FXML
-    private PasswordField pass1;
-    @FXML
-    Parent root;
-    DBConnect con = new DBConnect();
-    // private String idUser = "user", passUser = "1", idManager = "manager", passManager = "pass2";
+    private PasswordField passwordUser;
+   
+    DBConnection dbConnection = new DBConnection();
+    Properties properties = new Properties();
     private boolean isConnectedUser = false;
     private boolean isConnectedManager = false;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Image image = new Image(FXMLLoginController.class.getResourceAsStream("Papirus.png"));
         imageView.setImage(image);
-        Button2.setVisible(false);
-
+        connectButton.setVisible(false);
+        try {
+            File file = new File("userId.properties");
+            FileInputStream fileInput = new FileInputStream(file);
+            Properties properties = new Properties();
+            properties.load(fileInput);
+            Enumeration enumerationKeys = properties.keys();
+            while (enumerationKeys.hasMoreElements()) {
+                String key = (String) enumerationKeys.nextElement();
+                String value = properties.getProperty(key);
+                idText.setText(value);
+                System.out.println(key + ":" + value);
+            }
+            
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex + "file not found 2");
+            
+        } catch (IOException ex) {
+            System.out.println(ex + "IOException 2");
+        }
+        
     }
-
+    
     @FXML
     public void signIn(ActionEvent event) {
-        DataStorage.getDataStorage().setLoginUser(text1.getText());
-        label.setText("");
-        if (pass1.getText().equals(con.getPass(text1.getText())) && con.getIsManagerValues(text1.getText()) == true) {
-            label.setTextFill(Color.GREEN);
-            label.setText("Log in succeded.You can connect to database!");
+        DataStorage.getDataStorage().setLoginUser(idText.getText());//it helps to sell a book
+        labelMessages.setText("");
+        if (passwordUser.getText().equals(dbConnection.getPassword(idText.getText())) && dbConnection.getIsManagerValues(idText.getText()) == true) {
+            labelMessages.setTextFill(Color.GREEN);
+            labelMessages.setText("Log in succeded.You can connect to database!");
             isConnectedManager = true;
-            Button2.setVisible(true);
+            connectButton.setVisible(true);
             DataStorage.getDataStorage().setLogAsManager(true);
-
-        } else if (pass1.getText().equals(con.getPass(text1.getText())) && con.getIsManagerValues(text1.getText()) == false) {
-            label.setTextFill(Color.GREEN);
-            label.setText("Log in succeded.You can connect to database!");
+            
+        } else if (passwordUser.getText().equals(dbConnection.getPassword(idText.getText())) && dbConnection.getIsManagerValues(idText.getText()) == false) {
+            labelMessages.setTextFill(Color.GREEN);
+            labelMessages.setText("Log in succeded.You can connect to database!");
             isConnectedUser = true;
-            Button2.setVisible(true);
-
+            connectButton.setVisible(true);
+            
             DataStorage.getDataStorage().setLogAsManager(false);
         } else {
-            label.setTextFill(Color.RED);
-            label.setText("Log in failed!");
-            Button2.setVisible(false);
+            labelMessages.setTextFill(Color.RED);
+            labelMessages.setText("Log in failed!");
+            connectButton.setVisible(false);
             DataStorage.getDataStorage().setLogAsManager(false);
         }
-        text1.setText("");
-        pass1.setText("");
-
+        
+        try {
+            
+            String lastId = idText.getText();
+            Properties properties = new Properties();
+            properties.setProperty("userId", lastId);
+            
+            File file = new File("userId.properties");
+            try (FileOutputStream fileOutput = new FileOutputStream(file)) {
+                properties.store(fileOutput, "User Id");
+            }
+            
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex + "file not found");
+            
+        } catch (IOException ex) {
+            System.out.println(ex + "IOException");
+        }
+        idText.setText("");
+        passwordUser.setText("");
     }
-
+    
     @FXML
     public void exit(ActionEvent event) {
-        Stage stage = (Stage) Button3.getScene().getWindow();
+        Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
-
+    
     @FXML
     public void connect(ActionEvent event) {
+        
         if (isConnectedUser == true || isConnectedManager == true) {
             try {
                 Node node = (Node) event.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
                 Parent root = loader.load();
-                Scene scene = new Scene(root);
+                //   Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+                // Scene scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+                Scene scene = new Scene(root,630,565);
                 stage.setScene(scene);
-                // imageView.
+                stage.setTitle("Main Menu");
                 stage.show();
-
+                
             } catch (Exception ex) {
                 Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            label.setText("You have to sign in first!");
+            labelMessages.setText("You have to sign in first!");
         }
     }
-
+    
 }

@@ -12,7 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 //import java.sql.ResultSet;
 
-public class DBConnect {
+public class DBConnection {
 
     private Connection connection;
     private Statement st;
@@ -20,7 +20,7 @@ public class DBConnect {
     private String firstName, password, lastNameEmployee, lastNameClient;
     private boolean isManager;
 
-    public DBConnect() {
+    public DBConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/book_store?user=manager&password=manager_pass");
@@ -57,7 +57,7 @@ public class DBConnect {
 
             }
         } catch (Exception ex) {
-            System.out.println(ex + "LLLLLLL");
+            System.out.println(ex + "isManagerValue");
         }
         return isManager;
     }
@@ -565,12 +565,13 @@ public class DBConnect {
         }
         return arrayBooks;
     }
- public int getCountGenre(int id,String genre) {
-     int countGenre=0;
+
+    public int getCountGenre(int id, String genre) {
+        int countGenre = 0;
         try {
             String query = "select  count(*)as isbn from client_buys_book,books "
-                    + "where client_buys_book.isbn=books.ISBN  && client_buys_book.id= ' "+
-                    id+"'  && books.genre='"+genre+"'";
+                    + "where client_buys_book.isbn=books.ISBN  && client_buys_book.id= ' "
+                    + id + "'  && books.genre='" + genre + "'";
             rs = st.executeQuery(query);
             while (rs.next()) {
                 countGenre = rs.getInt("isbn");
@@ -580,6 +581,7 @@ public class DBConnect {
         }
         return countGenre;
     }
+
     public String getLastNameClient(int id) {
         try {
             String query = "select lastn from client where id= '" + id + "'";
@@ -637,9 +639,10 @@ public class DBConnect {
             System.out.println(ex + "set total without amount");
         }
     }
+
     public void setAmountWithPercent(int idClient, int amount) {
         try {
-            st.executeUpdate("update client set total='" + amount + "'" + "where id=' "  + idClient + "'");
+            st.executeUpdate("update client set total='" + amount + "'" + "where id=' " + idClient + "'");
         } catch (Exception ex) {
             System.out.println(ex + "set total with percent");
         }

@@ -36,7 +36,10 @@ import javafx.stage.Stage;
 public class FXMLBooksPageController implements Initializable {
 
     @FXML
-    private TableView<Book> table1 = new TableView<Book>();
+    private Button exitButton;
+
+    @FXML
+    private TableView<Book> tableBooks = new TableView<Book>();
     @FXML
     private TextField textFieldTitle;
     @FXML
@@ -50,11 +53,11 @@ public class FXMLBooksPageController implements Initializable {
     @FXML
     private TextField textFieldPrice;
     @FXML
-    private TextField textField7;
-    @FXML
-    private Button exitButton;
-    @FXML
     private TextField searchText;
+
+    @FXML
+    private TextField textFieldClientId;
+
     @FXML
     private TextArea textAreaOperations;
     @FXML
@@ -62,45 +65,47 @@ public class FXMLBooksPageController implements Initializable {
     @FXML
     private Label labelDailyAmount;
     @FXML
-    private TextField textFieldClientId;
-    DBConnect con = new DBConnect();
+    private Label labelError;
+    DBConnection dbConnection = new DBConnection();
     private int currentAmount = 0;
-    private int dailyAmount = 0;
-    private int temporaryAmountOfClient;
+    private int dailyAmount;
+    private int temporaryAmountOfClient, temporaryQuantity;
     private final int percentCondition1 = 5000;
-   
+    ArrayList<String> array = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        table1.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        labelError.setText("");
+        tableBooks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        table1.getColumns().addAll(Book.getColumn(table1));
-        table1.setItems(con.getDataBooks());
+        tableBooks.getColumns().addAll(Book.getColumn(tableBooks));
+        tableBooks.setItems(dbConnection.getDataBooks());
         textFieldClientId.setText("0");
+        dailyAmount = DataStorage.getDataStorage().getDailyAmount();
+        labelDailyAmount.setText("Daily:" + " " + dailyAmount);
     }
 
     @FXML
     private void addBookHandle(ActionEvent event) {
+        labelError.setText("");
         try {
-            String q1 = textFieldTitle.getText();
+            String title = textFieldTitle.getText();
             textFieldTitle.clear();
-            String q2 = textFieldAuthor.getText();
+            String author = textFieldAuthor.getText();
             textFieldAuthor.clear();
-            String q3 = textFieldISBN.getText();
+            String ISBN = textFieldISBN.getText();
             textFieldISBN.clear();
-            String q4 = textFieldGenre.getText();
+            String genre = textFieldGenre.getText();
             textFieldGenre.clear();
-            String q5 = textFieldQuantity.getText();
-            int i5 = Integer.valueOf(q5);
+            String temporaryQuantity = textFieldQuantity.getText();
+            int quantity = Integer.valueOf(temporaryQuantity);
             textFieldQuantity.clear();
-            String q6 = textFieldPrice.getText();
-            int i6 = Integer.valueOf(q6);
+            String temporaryPrice = textFieldPrice.getText();
+            int price = Integer.valueOf(temporaryPrice);
             textFieldPrice.clear();
-            String q7 = textField7.getText();
-            textField7.clear();
 
-            con.setBook(q1, q2, q3, q4, i5, i6, q7);
-            table1.setItems(con.getDataBooks());
+            dbConnection.setBook(title, author, ISBN, genre, quantity, price);
+            tableBooks.setItems(dbConnection.getDataBooks());
 
         } catch (Exception ex) {
             System.out.println("Is not a integer!!");
@@ -114,7 +119,7 @@ public class FXMLBooksPageController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 630, 565);
             stage.setScene(scene);
             stage.show();
 
@@ -131,100 +136,144 @@ public class FXMLBooksPageController implements Initializable {
 
     @FXML
     public void sellBookHandle(ActionEvent event) {
-         ArrayList<String> array = new ArrayList<>();
-        String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
-        int idClient = Integer.valueOf(textFieldClientId.getText());
-        DataStorage.getDataStorage().setIdClient(idClient);
-        con.sellBook(isbn);
-        int percent = con.getPercent(idClient);
-        DataStorage.getDataStorage().setPercent(percent);
+        labelError.setText("");
+        String isbn = tableBooks.getSelectionModel().getSelectedItem().getIsbn();
+        temporaryQuantity = dbConnection.getQuantity(isbn);
+        if (temporaryQuantity > 0) {
 
-        System.out.println(con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn));
-        String currentBook = con.getTitleSellOperation(isbn) + " " + con.getPriceSellOperation(isbn);
-        textAreaOperations.appendText(currentBook + "\n");
-        array.add(currentBook);
-        int currentPrice = calcPriceWithDiscount(con.getPriceSellOperation(isbn), percent);
-        con.setTotal(idClient, currentPrice);
+            int idClient = Integer.valueOf(textFieldClientId.getText());
+            DataStorage.getDataStorage().setIdClient(idClient);
+            dbConnection.sellBook(isbn);
+            int percent = dbConnection.getPercent(idClient);
+            DataStorage.getDataStorage().setPercent(percent);
 
-        temporaryAmountOfClient = con.getAmountClient(idClient);
-        System.out.print(temporaryAmountOfClient);
-        if (temporaryAmountOfClient >= percentCondition1) {
-            con.modifyPercent(idClient);
-            temporaryAmountOfClient = temporaryAmountOfClient - percentCondition1;
-            con.setTotal(idClient, temporaryAmountOfClient);
-            System.out.println("Your percent was modified");
+            System.out.println(dbConnection.getTitleSellOperation(isbn) + " " + dbConnection.getPriceSellOperation(isbn));
+            String currentBook = dbConnection.getTitleSellOperation(isbn) + " " + dbConnection.getPriceSellOperation(isbn);
+            textAreaOperations.appendText(currentBook + "\n");
+            array.add(currentBook);
+            int currentPrice = calcPriceWithDiscount(dbConnection.getPriceSellOperation(isbn), percent);
+            dbConnection.setAmountWithoutPercent(idClient, currentPrice);
+
+            temporaryAmountOfClient = dbConnection.getAmountClient(idClient);
+            System.out.print(temporaryAmountOfClient);
+            if (temporaryAmountOfClient >= percentCondition1) {
+                if (idClient != 0) {
+                    dbConnection.modifyPercent(idClient);
+                    temporaryAmountOfClient = temporaryAmountOfClient - percentCondition1;
+                    dbConnection.setAmountWithPercent(idClient, temporaryAmountOfClient);
+                    System.out.println("Your percent was modified");
+                } else {
+                    System.out.println("For this client percent is 0!");
+                }
+            } else {
+                System.out.println("Your percent was not modified");
+            }
+
+            dailyAmount = dailyAmount + currentPrice;
+            currentAmount = currentAmount + currentPrice;
+            DataStorage.getDataStorage().setCurrentAmount(currentAmount);
+            DataStorage.getDataStorage().setDailyAmount(dailyAmount);
+            labelCurrentAmount.setText("Current:" + currentAmount);
+            labelDailyAmount.setText("Daily:" + " " + dailyAmount);
+
+            dbConnection.setClientBook(idClient, isbn);
+            String initialer = DataStorage.getDataStorage().getLoginUser();
+            dbConnection.setEmployeeBook(isbn, initialer);
+            tableBooks.setItems(dbConnection.getDataBooks());
+
+            try {
+                FileOutputStream fos = new FileOutputStream("myfile");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(array);
+                oos.close();
+                fos.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            for (int i = 0; i < array.size(); i++) {
+                System.out.println(array.get(i));
+            }
         } else {
-            System.out.println("Your percent was not modified");
-        }
-
-        dailyAmount = dailyAmount + currentPrice;
-        currentAmount = currentAmount + currentPrice;
-        DataStorage.getDataStorage().setAmount(currentAmount);
-        labelCurrentAmount.setText("Current amount is " + " " + currentAmount);
-        labelDailyAmount.setText("Daily amount is " + " " + dailyAmount);
-
-        con.setClientBook(idClient, isbn);
-        String initialer = DataStorage.getDataStorage().getLoginUser();
-        con.setEmployeeBook(isbn, initialer);
-        table1.setItems(con.getDataBooks());
-        
-          try {
-            FileOutputStream fos = new FileOutputStream("myfile");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(array);
-            oos.close();
-            fos.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+            labelError.setText("Is not possible to sel if quantity=0!");
         }
     }
 
-    
-
     @FXML
     public void returnButtonHandle(ActionEvent event) {
-        String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
-
-        con.returnBook(isbn);
-        table1.setItems(con.getDataBooks());
+        labelError.setText("");
+        String isbn = tableBooks.getSelectionModel().getSelectedItem().getIsbn();
+        int temporaryPrice = dbConnection.getPriceSellOperation(isbn);
+        dbConnection.returnBook(isbn);
+        tableBooks.setItems(dbConnection.getDataBooks());
+        
+        if(temporaryPrice<dailyAmount){
+        dailyAmount=dailyAmount-temporaryPrice;
+        labelDailyAmount.setText("Daily:" + " " + dailyAmount);
+        }else{
+        labelError.setText("You have to sold more books!!");
+        }
     }
 
     @FXML
     public void handleChangeButton() {
-        String isbn = table1.getSelectionModel().getSelectedItem().getIsbn();
-        int actualQuantity = Integer.valueOf(textFieldQuantity.getText());
-        int actualPrice = Integer.valueOf(textFieldPrice.getText());
-        con.changeBookStatus(isbn, actualQuantity, actualPrice);
-        table1.setItems(con.getDataBooks());
+        labelError.setText("");
+        try {
+            String isbn = tableBooks.getSelectionModel().getSelectedItem().getIsbn();
+            int actualQuantity = Integer.valueOf(textFieldQuantity.getText());
+            int actualPrice = Integer.valueOf(textFieldPrice.getText());
+            dbConnection.changeBookStatus(isbn, actualQuantity, actualPrice);
+            tableBooks.setItems(dbConnection.getDataBooks());
+        } catch (Exception ex) {
+            labelError.setText("Is not a integer!");
+        }
     }
 
     @FXML
     public void searchISBNHandle(ActionEvent event) {
         String isbn = searchText.getText();
-        table1.setItems(con.searchISBN(isbn));
+        tableBooks.setItems(dbConnection.searchISBN(isbn));
     }
 
     @FXML
     public void searchTitleHandle(ActionEvent event) {
         String title1 = searchText.getText() + "%";
-        table1.setItems(con.searchTitle(title1));
+        tableBooks.setItems(dbConnection.searchTitle(title1));
     }
 
     @FXML
     public void searchAuthorHandle(ActionEvent event) {
         String author1 = searchText.getText() + "%";
-        table1.setItems(con.searchAuthor(author1));
+        tableBooks.setItems(dbConnection.searchAuthor(author1));
+    }
+
+    @FXML
+    public void searchPrice1Handle(ActionEvent event) {
+
+        tableBooks.setItems(dbConnection.searchPrice1());
+    }
+
+    @FXML
+    public void searchPrice2Handle(ActionEvent event) {
+
+        tableBooks.setItems(dbConnection.searchPrice2());
+    }
+
+    @FXML
+    public void searchPrice3Handle(ActionEvent event) {
+
+        tableBooks.setItems(dbConnection.searchPrice3());
     }
 
     @FXML
     public void printButtonHandle(ActionEvent event) {
         if (currentAmount != 0) {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLNote.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.setTitle("Kvito");
-                stage.setScene(new Scene(root1));
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLNote.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root, 630, 565);
+                stage.setScene(scene);
                 stage.show();
                 currentAmount = 0;
                 labelCurrentAmount.setText("Current amount is " + currentAmount);
@@ -241,6 +290,4 @@ public class FXMLBooksPageController implements Initializable {
         return finalPrice;
     }
 
-    public static void serializeArray() {}
-      
 }

@@ -8,26 +8,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLLoginController">
+<AnchorPane id="AnchorPane" prefHeight="567.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLLoginController">
    <children>
       <ImageView fx:id="imageView" fitHeight="567.0" fitWidth="552.0" layoutX="14.0" layoutY="-2.0" opacity="0.22" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="-2.0" />
-      <Label layoutX="284.0" layoutY="21.0" text="Welcome" textFill="#1d8a31">
+      <Label layoutX="284.0" layoutY="21.0" prefHeight="35.0" prefWidth="114.0" text="Welcome" textFill="#1d8a31" AnchorPane.leftAnchor="282.0" AnchorPane.rightAnchor="204.0">
          <font>
             <Font size="24.0" />
          </font></Label>
-      <Label layoutX="328.0" layoutY="70.0" text="to" />
-      <Label layoutX="282.0" layoutY="97.0" text="FRIENDS" textFill="#128040">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="328.0" layoutY="70.0" text="to" AnchorPane.leftAnchor="282.0" AnchorPane.rightAnchor="226.0" />
+      <Label layoutX="282.0" layoutY="97.0" text="FRIENDS" textFill="#128040" AnchorPane.leftAnchor="282.0" AnchorPane.rightAnchor="226.0">
          <font>
             <Font name="System Italic" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="325.0" layoutY="124.0" text="a" />
-      <Label layoutX="278.0" layoutY="167.0" text="friendly book store" textFill="#4cd63a" />
-      <Button fx:id="Button1" layoutX="97.0" layoutY="329.0" mnemonicParsing="false" onAction="#signIn" prefHeight="25.0" prefWidth="60.0" text="Sign in" />
-      <Button fx:id="Button2" layoutX="97.0" layoutY="354.0" mnemonicParsing="false" onAction="#connect" text="Connect" textAlignment="CENTER" />
-      <Button fx:id="Button3" layoutX="496.0" layoutY="342.0" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="52.0" text="Exit" />
-      <TextField fx:id="text1" layoutX="53.0" layoutY="256.0" onAction="#signIn" promptText="ID" />
-      <Label fx:id="label" alignment="CENTER" layoutX="54.0" layoutY="192.0" prefHeight="17.0" prefWidth="519.0" />
-      <PasswordField fx:id="pass1" layoutX="53.0" layoutY="281.0" onAction="#signIn" promptText="Password" />
+      <Label alignment="CENTER" layoutX="325.0" layoutY="124.0" text="a" AnchorPane.leftAnchor="282.0" AnchorPane.rightAnchor="226.0" />
+      <Label alignment="CENTER" layoutX="282.0" layoutY="168.0" prefHeight="17.0" prefWidth="114.0" text="friendly book store" textFill="#4cd63a" AnchorPane.leftAnchor="282.0" AnchorPane.rightAnchor="204.0" />
+      <Button fx:id="Button1" layoutX="24.0" layoutY="503.0" mnemonicParsing="false" onAction="#signIn" prefHeight="25.0" prefWidth="60.0" text="Sign in" AnchorPane.leftAnchor="24.0" />
+      <Button fx:id="connectButton" layoutX="24.0" layoutY="528.0" mnemonicParsing="false" onAction="#connect" text="Connect" textAlignment="CENTER" AnchorPane.leftAnchor="24.0" />
+      <Button fx:id="exitButton" layoutX="521.0" layoutY="503.0" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="52.0" text="Exit" AnchorPane.rightAnchor="27.0" />
+      <TextField fx:id="idText" layoutX="24.0" layoutY="259.0" onAction="#signIn" promptText="ID" AnchorPane.leftAnchor="24.0" />
+      <Label fx:id="labelMessages" alignment="CENTER" layoutX="54.0" layoutY="192.0" prefHeight="17.0" prefWidth="519.0" />
+      <PasswordField fx:id="passwordUser" layoutX="24.0" layoutY="284.0" onAction="#signIn" promptText="Password" AnchorPane.leftAnchor="24.0" />
    </children>
 </AnchorPane>

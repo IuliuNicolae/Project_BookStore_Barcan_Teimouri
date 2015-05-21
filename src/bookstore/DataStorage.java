@@ -14,7 +14,7 @@ public class DataStorage {
     private static DataStorage myDataStorage;
     private boolean logAsManager;
     private String loginUser;
-    private int amount, percent, idClient;
+    private int currentAmount, dailyAmount,percent, idClient;
 
     public DataStorage() {
     }
@@ -35,7 +35,7 @@ public class DataStorage {
     }
 
     public void setIdClient(int idClient) {
-        this.idClient = idClient;
+       this.idClient = idClient;
     }
 
     public int getIdClient() {
@@ -50,14 +50,20 @@ public class DataStorage {
         return loginUser;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setCurrentAmount(int currentAmount) {
+        this.currentAmount = currentAmount;
     }
 
-    public int getAmount() {
-        return amount;
+   public int getCurrentAmount() {
+       return currentAmount;
+    }
+public void setDailyAmount(int dailyAmount) {
+        this.dailyAmount = dailyAmount;
     }
 
+   public int getDailyAmount() {
+       return dailyAmount;
+    }
     public void setPercent(int percent) {
         this.percent = percent;
     }
@@ -65,4 +71,7 @@ public class DataStorage {
     public int getPercent() {
         return percent;
     }
+
+   
+ 
 }
