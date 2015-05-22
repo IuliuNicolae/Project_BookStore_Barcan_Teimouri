@@ -22,8 +22,9 @@ public class BookStore extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLLogin.fxml"));
         
         //Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-     Scene scene = new Scene(root,630,565);
+     Scene scene = new Scene(root);
         stage.setTitle("Login");
+        
         stage.setScene(scene);
         stage.show();
     }

@@ -21,9 +21,9 @@ import javafx.stage.Stage;
  * @author Iuliu
  */
 public class FXMLPasswordController implements Initializable {
-    
+
     private String id_user;
-    
+
     @FXML
     Button doneButton;
     @FXML
@@ -36,28 +36,29 @@ public class FXMLPasswordController implements Initializable {
     Label labelError;
     DBConnection dbConnection = new DBConnection();
     private String name;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       id_user = dbConnection.getIdLastEmployee();
+        password1.clear();
+        password2.clear();
+        id_user = dbConnection.getIdLastEmployee();
         name = dbConnection.getFirstNameLastEmployee();
         labelName.setText(name);
     }
-    
+
     @FXML
     private void handleButtonDone(ActionEvent event) {
-        password1.clear();
-        password2.clear();
+
         if (password1.getText().equals(password2.getText())) {
             String pass = password1.getText();
             dbConnection.setPassword(pass, id_user);
             Stage stage = (Stage) doneButton.getScene().getWindow();
             stage.close();
-            
+
         } else {
+            labelError.setText("Passwor error!Try again!");
             password1.clear();
             password2.clear();
-            labelError.setText("Passwor error!Try again!");
-            
         }
     }
 }

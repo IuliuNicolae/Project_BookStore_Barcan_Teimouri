@@ -119,8 +119,10 @@ public class FXMLBooksPageController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 630, 565);
+            Scene scene = new Scene(root, 420,555);
             stage.setScene(scene);
+           
+            stage.setTitle("Main menu");
             stage.show();
 
         } catch (Exception ex) {

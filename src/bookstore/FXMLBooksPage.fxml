@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,6 +9,11 @@
 
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLBooksPageController">
    <children>
+      <ImageView fitHeight="67.0" fitWidth="153.0" layoutX="10.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@TheBookstoreLOGO.png" />
+         </image>
+      </ImageView>
       <HBox layoutX="66.0" layoutY="154.0" prefHeight="25.0" prefWidth="578.0">
          <children>
             <TextField fx:id="textFieldTitle" prefHeight="25.0" prefWidth="97.0" promptText="Title" />
@@ -31,7 +37,7 @@
       <Button fx:id="backButton" layoutX="14.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="68.0" text="Back" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
       <Button fx:id="exitButton" layoutX="606.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="25.0" prefWidth="80.0" text="Exit" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
       <TextField fx:id="searchText" layoutX="509.0" layoutY="47.0" prefHeight="25.0" prefWidth="97.0" promptText="Title,author..." AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="47.0" />
-      <Label fx:id="labelDailyAmount" layoutX="14.0" layoutY="64.0" prefHeight="17.0" prefWidth="159.0" text="Daily amount" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="64.0" />
+      <Label fx:id="labelDailyAmount" layoutX="14.0" layoutY="89.0" prefHeight="17.0" prefWidth="159.0" text="Daily amount" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="89.0" />
       <TextField fx:id="textFieldClientId" layoutX="200.0" layoutY="461.0" prefHeight="25.0" prefWidth="103.0" promptText="Client's ID" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="200.0" />
       <MenuButton layoutX="606.0" layoutY="47.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Search" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="47.0">
         <items>
@@ -52,9 +58,9 @@
         </items>
       </MenuButton>
       <Button fx:id="returnBookButton" layoutX="208.0" layoutY="179.0" mnemonicParsing="false" onAction="#returnButtonHandle" prefHeight="25.0" prefWidth="103.0" text="Return a book" AnchorPane.leftAnchor="208.0" />
-      <Label layoutX="277.0" layoutY="20.0" prefHeight="17.0" prefWidth="103.0" text="Current operation " AnchorPane.leftAnchor="277.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="20.0" />
+      <Label layoutX="277.0" layoutY="20.0" prefHeight="17.0" prefWidth="195.0" text="Current operation " AnchorPane.leftAnchor="277.0" AnchorPane.rightAnchor="228.0" AnchorPane.topAnchor="20.0" />
       <Button fx:id="printButton" layoutX="606.0" layoutY="97.0" mnemonicParsing="false" onAction="#printButtonHandle" prefHeight="25.0" prefWidth="80.0" text="Print" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="97.0" />
-      <Label fx:id="labelCurrentAmount" layoutX="14.0" layoutY="89.0" prefHeight="17.0" prefWidth="159.0" text="Current amount" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="527.0" AnchorPane.topAnchor="89.0" />
+      <Label fx:id="labelCurrentAmount" layoutX="14.0" layoutY="114.0" prefHeight="17.0" prefWidth="159.0" text="Current amount" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="527.0" AnchorPane.topAnchor="114.0" />
       <Label layoutX="129.0" layoutY="465.0" text="Client's ID" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="129.0" />
       <Button fx:id="changeButton" layoutX="377.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleChangeButton" prefHeight="25.0" prefWidth="103.0" text="Change" AnchorPane.rightAnchor="220.0" />
       <TextArea fx:id="textAreaOperations" layoutX="277.0" layoutY="45.0" prefHeight="104.0" prefWidth="216.0" AnchorPane.leftAnchor="277.0" AnchorPane.rightAnchor="207.0" AnchorPane.topAnchor="45.0" />

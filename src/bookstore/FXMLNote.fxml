@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -19,7 +20,7 @@
       <Label layoutX="14.0" layoutY="254.0" text="Discount:" />
       <Label layoutX="14.0" layoutY="284.0" text="Paid:" />
       <Label layoutX="11.0" layoutY="319.0" prefHeight="17.0" prefWidth="64.0" text="V.A.T.(6%)" />
-      <Button fx:id="exitButton" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleExitButton" text="Exit" />
+      <Button fx:id="exitButton" layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleExitButton" text="Done" />
       <Label fx:id="labelEntireAmount" layoutX="122.0" layoutY="220.0" prefHeight="17.0" prefWidth="64.0" />
       <Label fx:id="labelDiscount" layoutX="122.0" layoutY="254.0" prefHeight="17.0" prefWidth="64.0" />
       <Label fx:id="labelPaidAmount" layoutX="122.0" layoutY="284.0" prefHeight="17.0" prefWidth="64.0" />
@@ -30,5 +31,10 @@
          </font></Label>
       <Label fx:id="labelNameEmployee" alignment="CENTER" layoutX="212.0" layoutY="365.0" prefHeight="17.0" prefWidth="314.0" />
       <TextArea fx:id="textAreaNote" layoutX="313.0" layoutY="93.0" prefHeight="200.0" prefWidth="200.0" />
+      <ImageView fitHeight="67.0" fitWidth="153.0" layoutX="11.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@TheBookstoreLOGO.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

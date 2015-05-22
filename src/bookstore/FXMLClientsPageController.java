@@ -69,7 +69,9 @@ public class FXMLClientsPageController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 630, 565);
+            Scene scene = new Scene(root, 420,555);
+          
+            stage.setTitle("Main menu");
             stage.setScene(scene);
             stage.show();
 

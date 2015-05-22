@@ -79,9 +79,10 @@ public class FXMLMainPage implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLLogin.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 630, 565);
+            Scene scene = new Scene(root, 600, 415);
             stage.setScene(scene);
-            stage.setTitle("Main menu");
+            stage.setResizable(false);
+            stage.setTitle("Login page");
             stage.show();
 
         } catch (Exception ex) {
