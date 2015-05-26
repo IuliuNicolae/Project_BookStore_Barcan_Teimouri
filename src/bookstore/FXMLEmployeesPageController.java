@@ -51,8 +51,6 @@ public class FXMLEmployeesPageController implements Initializable {
     private Button buttonRegister;
     @FXML
     private Label labelError;
-    @FXML
-    private Button buttonClose;
 
     @FXML
     private TextArea textViewActivity;
@@ -92,22 +90,15 @@ public class FXMLEmployeesPageController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 420,555);
+            Scene scene = new Scene(root, 879, 599);
             stage.setScene(scene);
-          
+
             stage.setTitle("Main menu");
             stage.show();
 
         } catch (Exception ex) {
             Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @FXML
-    private void handleQuitButton(ActionEvent event) {
-
-        Stage stage = (Stage) buttonClose.getScene().getWindow();
-        stage.close();
     }
 
     @FXML
@@ -141,14 +132,19 @@ public class FXMLEmployeesPageController implements Initializable {
             textPhone.setVisible(false);
             textInitials.setVisible(false);
             textSalary.setVisible(false);
-            String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
-            if ("manager".equals(initialer)) {
-                labelError.setText("Is not possible to delete this row!");
-            } else {
-                System.out.println(initialer);
-                dbConnection.deleteData(initialer);
-                dbConnection.deleteIdUser(initialer);
-                tableEmployees.setItems(dbConnection.getDataEmployees());
+            try {
+                String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
+
+                if ("manager".equals(initialer)) {
+                    labelError.setText("Is not possible to delete this row!");
+                } else {
+                    System.out.println(initialer);
+                    dbConnection.deleteData(initialer);
+                    dbConnection.deleteIdUser(initialer);
+                    tableEmployees.setItems(dbConnection.getDataEmployees());
+                }
+            } catch (Exception ex) {
+                labelError.setText("Incorrect selection");
             }
         } else {
             labelError.setText("Access denied");
@@ -176,12 +172,10 @@ public class FXMLEmployeesPageController implements Initializable {
                 String temporarySalary = textSalary.getText();
                 int salary = Integer.valueOf(temporarySalary);
                 textSalary.clear();
-
                 dbConnection.setNewId(initials);
                 int controller = dbConnection.setDataEmployee(lastName, firstName, adress, email, phone, initials, salary);
                 if (controller == 1) {
                     labelError.setText("Initials exist!!");
-
                 } else {
                     tableEmployees.setItems(dbConnection.getDataEmployees());
                     try {
@@ -196,7 +190,7 @@ public class FXMLEmployeesPageController implements Initializable {
                     }
                 }
             } catch (Exception ex) {
-                labelError.setText("Is not a integer!");
+                labelError.setText("Salary or phone field does not have a integer!");
             }
         } else {
             labelError.setText("Access denied");
@@ -206,7 +200,6 @@ public class FXMLEmployeesPageController implements Initializable {
     @FXML
     private void handlePrintButton(ActionEvent event) {
         labelError.setText(null);
-
         if (isManager == true) {
             buttonRegister.setVisible(false);
             changeButton.setVisible(true);
@@ -240,10 +233,13 @@ public class FXMLEmployeesPageController implements Initializable {
                 String temporarySalary = textSalary.getText();
                 int salary = Integer.valueOf(temporarySalary);
                 textSalary.clear();
-                String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
-
-                dbConnection.updateEmployee(initialer, lastName, firstName, adress, email, phone, salary);
-                tableEmployees.setItems(dbConnection.getDataEmployees());
+                try {
+                    String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
+                    dbConnection.updateEmployee(initialer, lastName, firstName, adress, email, phone, salary);
+                    tableEmployees.setItems(dbConnection.getDataEmployees());
+                } catch (Exception ex) {
+                    labelError.setText("Incorrect selection!");
+                }
             } catch (Exception ex) {
                 System.out.println("Is not a integer!");
                 labelError.setText("Is not a integer!");
@@ -255,13 +251,17 @@ public class FXMLEmployeesPageController implements Initializable {
 
     @FXML
     public void handleViewActivityButton(ActionEvent event) {
+        labelError.setText("");
         textViewActivity.clear();
         if (isManager == true) {
-            String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
-            for (int i = 0; i < dbConnection.controllEmployeeActivity(initialer).size(); i++) {
-                textViewActivity.appendText(dbConnection.controllEmployeeActivity(initialer).get(i) + "\n");
+            try {
+                String initialer = tableEmployees.getSelectionModel().getSelectedItem().getInitialer();
+                for (int i = 0; i < dbConnection.controllEmployeeActivity(initialer).size(); i++) {
+                    textViewActivity.appendText(dbConnection.controllEmployeeActivity(initialer).get(i) + "\n");
+                }
+            } catch (Exception ex) {
+                labelError.setText("Incorrect selection!");
             }
-
         } else {
             labelError.setText("Acces denied!");
         }
@@ -269,6 +269,7 @@ public class FXMLEmployeesPageController implements Initializable {
 
     @FXML
     public void graphicEmployeesHandler(ActionEvent event) {
+        labelError.setText("");
         if (isManager == true) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLGraphicEmployees.fxml"));

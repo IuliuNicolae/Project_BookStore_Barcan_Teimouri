@@ -108,7 +108,7 @@ public class FXMLNoteController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLBooksPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root,630,565);
+            Scene scene = new Scene(root,879, 599);
             stage.setScene(scene);
             stage.show();
 

@@ -57,7 +57,14 @@ public class FXMLClientsPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        /*
+        textId.setVisible(false);
+        textLastName.setVisible(false);
+        textFirstName.setVisible(false);
+        textAdress.setVisible(false);
+        textEmail.setVisible(false);
+        textPhone.setVisible(false);
+                */
         tableClient.getColumns().addAll(Client.getColumn(tableClient));
         tableClient.setItems(dbConnection.getDataClients());
     }
@@ -69,8 +76,8 @@ public class FXMLClientsPageController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 420,555);
-          
+            Scene scene = new Scene(root, 879, 599);
+
             stage.setTitle("Main menu");
             stage.setScene(scene);
             stage.show();
@@ -78,12 +85,6 @@ public class FXMLClientsPageController implements Initializable {
         } catch (Exception ex) {
             Logger.getLogger(FXMLMainPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @FXML
-    private void handleCloseButton(ActionEvent event) {
-        Stage stage = (Stage) buttonClose.getScene().getWindow();
-        stage.close();
     }
 
     @FXML
@@ -137,7 +138,7 @@ public class FXMLClientsPageController implements Initializable {
                 labelError.setText("You should not change this client!");
             }
         } catch (Exception ex) {
-            labelError.setText("Is not a integer!!");
+            labelError.setText("Update error; select ID from table and phone number must be integer");
             System.out.println("Is not a integer!");
         }
     }
@@ -155,7 +156,7 @@ public class FXMLClientsPageController implements Initializable {
 
     @FXML
     private void handleGraphicButton(ActionEvent event) {
-        int idClientGraphic=tableClient.getSelectionModel().getSelectedItem().getId();
+        int idClientGraphic = tableClient.getSelectionModel().getSelectedItem().getId();
         DataStorage.getDataStorage().setIdClient(idClientGraphic);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLGraphicClient.fxml"));

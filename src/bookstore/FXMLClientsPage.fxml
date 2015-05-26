@@ -14,7 +14,7 @@
             <Image url="@TheBookstoreLOGO.png" />
          </image>
       </ImageView>
-      <Button fx:id="backButton" layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#backButtonHandle" text="Back" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+      <Button fx:id="backButton" layoutX="243.0" layoutY="362.0" mnemonicParsing="false" onAction="#backButtonHandle" prefHeight="25.0" prefWidth="57.0" text="Done" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="300.0" />
       <GridPane layoutX="3.0" layoutY="227.0" prefHeight="135.0" prefWidth="628.0" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="227.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,18 +33,23 @@
             </TableView>
          </children>
       </GridPane>
-      <Button fx:id="addButton" layoutX="185.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="25.0" prefWidth="57.0" text="Add" />
-      <Button fx:id="updateButton" layoutX="242.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleUpdateButton" prefHeight="25.0" prefWidth="57.0" text="Update" />
+      <Button fx:id="addButton" layoutX="214.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="25.0" prefWidth="57.0" text="Add" />
+      <Button fx:id="updateButton" layoutX="271.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleUpdateButton" prefHeight="25.0" prefWidth="57.0" text="Update" />
       <TextField fx:id="textId" layoutX="71.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="ID " />
       <TextField fx:id="textFirstName" layoutX="128.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="First Name" />
       <TextField fx:id="textLastName" layoutX="185.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="Last Name" />
       <TextField fx:id="textAdress" layoutX="242.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="Adress" />
       <TextField fx:id="textEmail" layoutX="299.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="Email" />
       <TextField fx:id="textPhone" layoutX="356.0" layoutY="164.0" prefHeight="25.0" prefWidth="57.0" promptText="Phone" />
-      <Label fx:id="labelError" alignment="CENTER" layoutX="69.0" layoutY="136.0" prefHeight="17.0" prefWidth="316.0" />
+      <Label fx:id="labelError" alignment="CENTER" layoutX="16.0" layoutY="113.0" prefHeight="17.0" prefWidth="397.0" />
       <TextArea fx:id="tableClientBooks" layoutX="413.0" layoutY="54.0" prefHeight="135.0" prefWidth="181.0" AnchorPane.leftAnchor="413.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="54.0" />
       <Button fx:id="viewBooksButton" layoutX="414.0" layoutY="29.0" mnemonicParsing="false" onAction="#handleViewBooksButton" prefHeight="25.0" prefWidth="181.0" text=" View client's books" AnchorPane.leftAnchor="414.0" AnchorPane.rightAnchor="5.0" />
-      <Button fx:id="buttonClose" layoutX="541.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleCloseButton" text="Close" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-      <Button fx:id="clientGraphicButton" layoutX="414.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleGraphicButton" prefHeight="25.0" prefWidth="181.0" text="Client favorite genres graph" />
+      <Button fx:id="clientGraphicButton" layoutX="414.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleGraphicButton" prefHeight="36.0" prefWidth="181.0" text="Favorite genres of client" />
+      <Label layoutX="72.0" layoutY="148.0" prefHeight="17.0" prefWidth="57.0" text="ID" />
+      <Label layoutX="129.0" layoutY="148.0" prefHeight="17.0" prefWidth="57.0" text="First name" />
+      <Label layoutX="185.0" layoutY="148.0" prefHeight="17.0" prefWidth="57.0" text="Last name" />
+      <Label layoutX="243.0" layoutY="148.0" prefHeight="17.0" prefWidth="57.0" text="Adress" />
+      <Label layoutX="299.0" layoutY="148.0" prefHeight="17.0" prefWidth="57.0" text="Email" />
+      <Label layoutX="356.0" layoutY="148.0" prefHeight="17.0" prefWidth="57.0" text="Phone" />
    </children>
 </AnchorPane>

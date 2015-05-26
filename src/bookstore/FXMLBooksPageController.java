@@ -20,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
@@ -34,9 +33,6 @@ import javafx.stage.Stage;
  * @author Iuliu
  */
 public class FXMLBooksPageController implements Initializable {
-
-    @FXML
-    private Button exitButton;
 
     @FXML
     private TableView<Book> tableBooks = new TableView<Book>();
@@ -77,7 +73,6 @@ public class FXMLBooksPageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         labelError.setText("");
         tableBooks.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
         tableBooks.getColumns().addAll(Book.getColumn(tableBooks));
         tableBooks.setItems(dbConnection.getDataBooks());
         textFieldClientId.setText("0");
@@ -109,6 +104,7 @@ public class FXMLBooksPageController implements Initializable {
 
         } catch (Exception ex) {
             System.out.println("Is not a integer!!");
+            labelError.setText("Registration error!");
         }
     }
 
@@ -119,9 +115,9 @@ public class FXMLBooksPageController implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 420,555);
+            Scene scene = new Scene(root, 879, 599);
             stage.setScene(scene);
-           
+
             stage.setTitle("Main menu");
             stage.show();
 
@@ -131,14 +127,9 @@ public class FXMLBooksPageController implements Initializable {
     }
 
     @FXML
-    private void handleExitButton(ActionEvent event) {
-        Stage stage = (Stage) exitButton.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
     public void sellBookHandle(ActionEvent event) {
         labelError.setText("");
+        try{
         String isbn = tableBooks.getSelectionModel().getSelectedItem().getIsbn();
         temporaryQuantity = dbConnection.getQuantity(isbn);
         if (temporaryQuantity > 0) {
@@ -196,24 +187,29 @@ public class FXMLBooksPageController implements Initializable {
                 System.out.println(array.get(i));
             }
         } else {
-            labelError.setText("Is not possible to sel if quantity=0!");
+            labelError.setText("Is not possible to sell if quantity=0!");
         }
+        }catch(Exception ex){
+        labelError.setText("Selection error!");}
     }
 
     @FXML
     public void returnButtonHandle(ActionEvent event) {
         labelError.setText("");
+        try{
         String isbn = tableBooks.getSelectionModel().getSelectedItem().getIsbn();
         int temporaryPrice = dbConnection.getPriceSellOperation(isbn);
         dbConnection.returnBook(isbn);
         tableBooks.setItems(dbConnection.getDataBooks());
-        
-        if(temporaryPrice<dailyAmount){
-        dailyAmount=dailyAmount-temporaryPrice;
-        labelDailyAmount.setText("Daily:" + " " + dailyAmount);
-        }else{
-        labelError.setText("You have to sold more books!!");
+
+        if (temporaryPrice <= dailyAmount) {
+            dailyAmount = dailyAmount - temporaryPrice;
+            labelDailyAmount.setText("Daily:" + " " + dailyAmount);
+        } else {
+            labelError.setText("You have to sold more books!!");
         }
+        }catch(Exception ex){
+        labelError.setText("Selection error!");}
     }
 
     @FXML
@@ -285,6 +281,14 @@ public class FXMLBooksPageController implements Initializable {
             }
         }
         labelCurrentAmount.setText(" Current amount");
+    }
+
+    @FXML
+    public void refreshHandleButton(ActionEvent event) {
+        labelError.setText(null);
+        searchText.clear();
+        textAreaOperations.clear();
+        tableBooks.setItems(dbConnection.getDataBooks());
     }
 
     public static int calcPriceWithDiscount(int price, int discount) {

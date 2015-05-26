@@ -45,7 +45,7 @@ public class FXMLMainPage implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEmployeesPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 630, 565);
+            Scene scene = new Scene(root, 879, 599);
             stage.setScene(scene);
             stage.setTitle("Page of employees");
             stage.show();
@@ -62,7 +62,7 @@ public class FXMLMainPage implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLClientsPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 630, 565);
+            Scene scene = new Scene(root, 879, 599);
             stage.setScene(scene);
             stage.setTitle("Page of client");
             stage.show();
@@ -79,7 +79,7 @@ public class FXMLMainPage implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLLogin.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 600, 415);
+            Scene scene = new Scene(root, 879, 599);
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setTitle("Login page");
@@ -103,7 +103,7 @@ public class FXMLMainPage implements Initializable {
             Stage stage = (Stage) node.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLBooksPage.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 630, 565);
+            Scene scene = new Scene(root, 879, 599);
             stage.setScene(scene);
             stage.setTitle("Page of books");
             stage.show();

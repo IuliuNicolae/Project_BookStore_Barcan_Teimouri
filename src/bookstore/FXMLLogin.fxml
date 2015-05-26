@@ -14,9 +14,15 @@
          <image>
             <Image url="@TheBookStore.jpg" />
          </image></ImageView>
-      <TextField fx:id="idText" layoutX="341.0" layoutY="219.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#signIn" prefHeight="20.0" prefWidth="150.0" promptText="ID" AnchorPane.leftAnchor="341.0" />
+      <TextField fx:id="idText" layoutX="340.0" layoutY="215.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#signIn" prefHeight="27.0" prefWidth="151.0" promptText="ID" AnchorPane.leftAnchor="340.0">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
       <Label fx:id="labelMessages" alignment="CENTER" layoutX="157.0" layoutY="482.0" prefHeight="17.0" prefWidth="519.0" />
-      <PasswordField fx:id="passwordUser" layoutX="341.0" layoutY="257.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#signIn" prefHeight="20.0" prefWidth="150.0" promptText="Password" AnchorPane.leftAnchor="341.0" />
+      <PasswordField fx:id="passwordUser" layoutX="339.0" layoutY="254.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#signIn" prefHeight="26.0" prefWidth="152.0" promptText="Password" AnchorPane.leftAnchor="339.0">
+         <font>
+            <Font size="14.0" />
+         </font></PasswordField>
       <VBox alignment="CENTER" layoutX="359.0" layoutY="310.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0" prefWidth="116.0" spacing="7.0">
          <children>
             <Button fx:id="Button1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signIn" prefHeight="31.0" prefWidth="112.0" text="Sign in">

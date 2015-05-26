@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
@@ -9,20 +10,35 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLMainPage">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookstore.FXMLMainPage">
    <children>
-      <ImageView fitHeight="900.0" fitWidth="1600.0" layoutX="-5.0" layoutY="-13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="-5.0">
+      <ImageView fitHeight="1600.0" fitWidth="879.0" layoutY="-338.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0">
          <image>
             <Image url="@menuPic.png" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" layoutX="191.0" layoutY="179.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="192.0" spacing="25.0">
+      <VBox alignment="CENTER" layoutX="344.0" layoutY="182.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="288.0" prefWidth="192.0" spacing="25.0">
          <children>
-            <Button fx:id="buttonEmployee" mnemonicParsing="false" onAction="#handleEmployeesButton" prefHeight="25.0" prefWidth="146.0" text="Employees page" />
-            <Button fx:id="buttonClient" mnemonicParsing="false" onAction="#handleClientsButton" prefHeight="25.0" prefWidth="146.0" text="Clients page" />
-            <Button fx:id="buttonBooks" mnemonicParsing="false" onAction="#handleBooksPage" prefHeight="25.0" prefWidth="145.0" text="Books page" />
-            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="25.0" prefWidth="145.0" text="Log out" />
-            <Button fx:id="buttonExit" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="25.0" prefWidth="145.0" text="Quit" />
+            <Button fx:id="buttonEmployee" mnemonicParsing="false" onAction="#handleEmployeesButton" prefHeight="25.0" prefWidth="146.0" text="Employees register">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="buttonClient" mnemonicParsing="false" onAction="#handleClientsButton" prefHeight="25.0" prefWidth="146.0" text="Clients register">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="buttonBooks" mnemonicParsing="false" onAction="#handleBooksPage" prefHeight="25.0" prefWidth="145.0" text="Sell">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="25.0" prefWidth="145.0" text="Log out">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="buttonExit" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="25.0" prefWidth="145.0" text="Quit">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
          </children>
          <effect>
             <DropShadow blurType="TWO_PASS_BOX" height="51.89" radius="25.075" spread="0.13" width="50.41" />
